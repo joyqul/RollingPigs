@@ -11,7 +11,7 @@ public class Generator{
 		JSONObject circle1 = new JSONObject();
 		circle1.put("type", "circle");
 		circle1.put("id", 0);
-		circle1.put("src", "circle.png");
+		circle1.put("src", 0);
 		circle1.put("color", 0x1);
 		circle1.put("x", 384);
 		circle1.put("y", 384);
@@ -24,7 +24,7 @@ public class Generator{
 		JSONObject circle2 = new JSONObject();
 		circle2.put("type", "circle");
 		circle2.put("id", 1);
-		circle2.put("src", "circle.png");
+		circle2.put("src", 0);
 		circle2.put("color", 0x10);
 		circle2.put("x", 234);
 		circle2.put("y", 644);
@@ -37,7 +37,7 @@ public class Generator{
 		JSONObject circle3 = new JSONObject();
 		circle3.put("type", "circle");
 		circle3.put("id", 2);
-		circle3.put("src", "circle.png");
+		circle3.put("src", 0);
 		circle3.put("color", 0x100);
 		circle3.put("x", 534);
 		circle3.put("y", 644);
@@ -74,7 +74,7 @@ public class Generator{
 		JSONObject node1 = new JSONObject();
 		node1.put("type", "node");
 		node1.put("id", 0);
-		node1.put("img_link", "bird_blue.png");
+		node1.put("src", 0);
 		node1.put("onSId", 0);
 		node1.put("color", 0x100);
 		result.put(node1);
@@ -82,7 +82,7 @@ public class Generator{
 		JSONObject node2 = new JSONObject();
 		node2.put("type", "node");
 		node2.put("id", 1);
-		node2.put("img_link", "bird_red.png");
+		node2.put("src", 1);
 		node2.put("onSId", 1);
 		node2.put("color", 0x10);
 		result.put(node2);
@@ -90,7 +90,7 @@ public class Generator{
 		JSONObject node3 = new JSONObject();
 		node3.put("type", "node");
 		node3.put("id", 2);
-		node3.put("img_link", "bird_yellow.png");
+		node3.put("src", 2);
 		node3.put("onSId", 2);
 		node3.put("color", 0x1);
 		result.put(node3);
