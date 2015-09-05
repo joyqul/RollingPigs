@@ -181,7 +181,7 @@ public class MainActivity extends Activity {
 
             int prev = sharedPreferences.getInt( ""+st , 1000 );
             if ( cnt < prev )
-                sharedPreferences.edit().putInt( ""+st , cnt );
+                sharedPreferences.edit().putInt( ""+st , cnt ).apply();
             prev = Math.min( prev , cnt );
 
             ((TextView) view.findViewById(R.id.high_score) ).setText( "High score : " + prev );
@@ -238,6 +238,8 @@ public class MainActivity extends Activity {
     }
 
     private void playPig(){
+
+
         MediaPlayer mp = MediaPlayer.create( this , R.raw.pig );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
