@@ -16,7 +16,7 @@ public class Generator{
 	public static void main(String[] args) throws Exception{
 		for(String name : names){
 			Circle.counter = Slot.counter = Node.counter = 0;
-			PrintWriter out = new PrintWriter(name+"Json.txt");
+			PrintWriter out = new PrintWriter(name+"jsom.txt");
 			circleList = new ArrayList<>();
 			slotList = new ArrayList<>();
 			nodeList = new ArrayList<>();
