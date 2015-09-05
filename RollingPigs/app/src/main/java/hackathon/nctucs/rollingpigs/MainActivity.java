@@ -231,8 +231,6 @@ public class MainActivity extends Activity {
     }
 
     private void playClick(){
-        if ( sharedPreferences.getBoolean( "mute" , false ) == true )
-            return;
         MediaPlayer mp = MediaPlayer.create( this , R.raw.click );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -243,9 +241,6 @@ public class MainActivity extends Activity {
     }
 
     private void playPig(){
-        if ( sharedPreferences.getBoolean( "mute" , false ) == true )
-            return;
-
         MediaPlayer mp = MediaPlayer.create( this , R.raw.pig );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
