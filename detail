@@ -1,0 +1,39 @@
+1. 座標化（ 768*1280 ）
+2. 描述一個地圖
+	Circle{
+		type: “circle”,
+		id: $id,
+		src: $img_link,
+		color: $color,  [ 1,2,4,8… ]
+		x: $x, 
+		y: $y,
+		radius: $radius,
+		slots: [1,2,3,4]
+	}
+	Slot{
+		type: “slot”,
+		id: $id,
+		x:  $x,
+		y:  $y,
+		content:		$node_id
+	}
+	Node{
+		type: “node”,
+		id:	$id,
+		src: $img_link
+		onSId: 	$slot_id,
+		color:	$color,  [0101…]
+	}
+
+3. rotate 
+	for a circle
+		move the nodes in slots array to the next one
+
+4. checkWin
+	For each circle, check nodes in slots
+
+5. 
+	
+
+
+	

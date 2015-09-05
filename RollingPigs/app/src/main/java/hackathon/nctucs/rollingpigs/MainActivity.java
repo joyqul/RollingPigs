@@ -1,25 +1,27 @@
 package hackathon.nctucs.rollingpigs;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import hackathon.nctucs.rollingpigs.elements.Circle;
+import hackathon.nctucs.rollingpigs.elements.Node;
+import hackathon.nctucs.rollingpigs.elements.Slot;
 
 
 public class MainActivity extends Activity {
 
 
-    Circle[] circles;
-    Node[]   nodes;
-
+    Map< Integer , Circle > circles = new HashMap<>();
+    Map< Integer , Node >   nodes = new HashMap<>();
+    Map< Integer , Slot >   slots = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,55 @@ public class MainActivity extends Activity {
     private void initStage( int stage ) {
 
 
+        // requires read file
+
+        JSONObject stageInfo = new JSONObject();
+
+
+        try {
+
+            if (stageInfo.getString("type").equals("circle")) {
+
+
+
+                Circle circle = new Circle(
+                        stageInfo.getInt( "id" ),
+                        stageInfo.getInt( "color" ),
+                        stageInfo.getInt( "x" ),
+                        stageInfo.getInt( "y" ),
+                        stageInfo.getDouble("radius"),
+                        stageInfo.getString("src")
+                );
+
+                circles.put( stageInfo.getInt( "id" ) , circle );
+
+
+            }
+            else if ( stageInfo.getString("type").equals("node") ){
 
 
 
 
+
+
+
+            }
+            else if ( stageInfo.getString("type").equals("slot") ){
+
+
+
+                id: $id,
+                        x:  $x,
+                        y:  $y,
+                        content:		$node_id
+
+
+
+            }
+        }
+        catch( Exception e ){
+            e.printStackTrace();
+        }
 
 
     }
