@@ -1,5 +1,6 @@
 package hackathon.nctucs.rollingpigs.elements;
 
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -64,16 +65,18 @@ public class Circle {
             int now_sid    = slots.get( i );
             int target_sid = slots.get( (i+1)%slots.size() );
 
-
+            Log.e( "radius" , radius + "" );
             nodes.get( i ).animate(
                 x,
                 y,
-                2*(int)radius,
+                (int)Circle.this.radius,
                 m_slots.get( now_sid ).getX(),
                 m_slots.get( now_sid ).getY(),
                 m_slots.get( target_sid ).getX(),
                 m_slots.get( target_sid ).getY()
             );
+
+            Log.e("animate" , now_sid + " " + target_sid);
 
             nodes.get( i ).setOnSId( target_sid )   ;
             m_slots.get( target_sid ).setContent( nodes.get( i ).getId() );

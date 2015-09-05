@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -49,9 +50,9 @@ public class Node {
     }
     public void animate( int circleX , int circleY , int circleR , int fromX , int fromY , int targetX , int targetY ){
 
-        radius *= 2;
-        final RectF rect = new RectF( circleX-radius , circleY-radius , circleX+radius , circleY+radius );
 
+        final RectF rect = new RectF( circleX-circleR , circleY-circleR , circleX+circleR , circleY+circleR );
+        Log.e( "" + (circleX - circleR) , "" + (circleX+circleR));
         Path path = new Path();
         path.addArc( rect , 0  , 360 );
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(img, View.X, View.Y, path);
