@@ -200,7 +200,7 @@ public class MainActivity extends Activity {
         super.onStart();
         mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mediaPlayer.setLooping( true );
+        mediaPlayer.setLooping(true);
 
         try {
             mediaPlayer.start();
@@ -224,7 +224,10 @@ public class MainActivity extends Activity {
     private void updateCnt(){
         cnt += 1;
         step.setText( "Step : " + cnt );
-
+        Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT);
+		for(Node n : nodes.values()){
+			n.freezeEffect();
+		}
     }
 
     private void playClick(){
