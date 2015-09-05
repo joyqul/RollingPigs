@@ -14,8 +14,8 @@ public class Generator{
 	static final int totalStages = 30;
 
 	public static void main(String[] args) throws Exception{
-		for(int i=1;i<=totalStages;i++){
-			
+		for(int i=1;i<totalStages;i++){
+			if(i == 10  || i == 15) continue;
 			String name = String.format("lv%02d", i);
 			Circle.counter = Slot.counter = Node.counter = 0;
 			PrintWriter out = new PrintWriter(name+"jsom.txt");
