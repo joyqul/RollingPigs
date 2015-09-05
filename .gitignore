@@ -15,6 +15,7 @@ Server/*.pyc
 *~
 *.sass-cache
 *.class
+*.iml
 
 # OS or Editor folders
 .DS_Store
