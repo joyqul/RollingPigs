@@ -2,6 +2,8 @@ package hackathon.nctucs.rollingpigs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -13,7 +15,7 @@ import android.widget.ImageView;
 public class MenuPage extends Activity {
 
     final int[] ids = new int[]{ 0 , R.id.stage1 , R.id.stage2 , R.id.stage3 };
-
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,32 @@ public class MenuPage extends Activity {
 
         }
 
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onStart();
+        mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.setLooping( true );
+
+        try {
+            mediaPlayer.start();
+
+        }
+        catch ( Exception e ){
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if ( mediaPlayer.isPlaying() )
+            mediaPlayer.stop();
 
     }
 }

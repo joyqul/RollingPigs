@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,7 +47,7 @@ public class MainActivity extends Activity {
     Map< Integer , Circle > circles = new HashMap<>();
     Map< Integer , Node >   nodes = new HashMap<>();
     Map< Integer , Slot >   slots = new HashMap<>();
-
+    MediaPlayer mediaPlayer;
     ImageView reset ;
     TextView step;
     AlertDialog alg;
@@ -72,6 +74,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Toast.makeText( getApplicationContext() , "started" , Toast.LENGTH_LONG ).show();
         sharedPreferences = getSharedPreferences( "db" , MODE_PRIVATE );
+
+
         stage = getIntent().getIntExtra( "stage" , -1 );
 
         step = (TextView)findViewById( R.id.score );
@@ -81,6 +85,7 @@ public class MainActivity extends Activity {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    playClick();
                     reloadStage();
                 }
             }
@@ -171,7 +176,7 @@ public class MainActivity extends Activity {
 
             );
 
-            TextView yourScore = (TextView) view.findViewById( R.id.your_score );
+            TextView yourScore = (TextView) view.findViewById(R.id.your_score);
             yourScore.setText( "Your score : " + cnt );
 
             int prev = sharedPreferences.getInt( ""+st , 1000 );
@@ -179,7 +184,7 @@ public class MainActivity extends Activity {
                 sharedPreferences.edit().putInt( ""+st , cnt );
             prev = Math.min( prev , cnt );
 
-            ((TextView) view.findViewById( R.id.high_score ) ).setText( "High score : " + prev );
+            ((TextView) view.findViewById(R.id.high_score) ).setText( "High score : " + prev );
 
             alg.show();
 
@@ -190,12 +195,57 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onStart();
+        mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.setLooping( true );
+
+        try {
+            mediaPlayer.start();
+
+        }
+        catch ( Exception e ){
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if ( mediaPlayer.isPlaying() )
+            mediaPlayer.stop();
+
+    }
+
+
     private void updateCnt(){
         cnt += 1;
         step.setText( "Step : " + cnt );
 
     }
 
+    private void playClick(){
+        MediaPlayer mp = MediaPlayer.create( this , R.raw.click );
+        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mp.start();
+        }
+        catch ( Exception e ){
+        }
+    }
+
+    private void playPig(){
+        MediaPlayer mp = MediaPlayer.create( this , R.raw.pig );
+        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mp.start();
+        }
+        catch ( Exception e ){
+        }
+    }
 
 
     private void drawElements(){
@@ -236,6 +286,7 @@ public class MainActivity extends Activity {
                         @Override
                         public void onClick(View v) {
 
+                            playPig();
 
                             rotateCircle( (int)v.getTag() );
                             updateCnt();
@@ -367,7 +418,7 @@ public class MainActivity extends Activity {
                             stageInfo.getInt("color"),
                             stageInfo.getInt("onSId"),
                             stageInfo.getInt("radius"),
-                            nodeSrc[ stageInfo.getInt( "src" ) ]
+                            nodeSrc[ stageInfo.getInt( "color" ) ]
                     );
 
                     nodes.put(stageInfo.getInt("id"), node);
