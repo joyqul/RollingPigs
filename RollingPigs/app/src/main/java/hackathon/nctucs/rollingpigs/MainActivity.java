@@ -224,13 +224,15 @@ public class MainActivity extends Activity {
     private void updateCnt(){
         cnt += 1;
         step.setText( "Step : " + cnt );
-        Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT).show();
 		for(Node n : nodes.values()){
 			n.freezeEffect();
 		}
     }
 
     private void playClick(){
+        if ( sharedPreferences.getBoolean( "mute" , false ) == true )
+            return;
         MediaPlayer mp = MediaPlayer.create( this , R.raw.click );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -241,7 +243,8 @@ public class MainActivity extends Activity {
     }
 
     private void playPig(){
-
+        if ( sharedPreferences.getBoolean( "mute" , false ) == true )
+            return;
 
         MediaPlayer mp = MediaPlayer.create( this , R.raw.pig );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);

@@ -17,23 +17,34 @@ public class MenuPage extends Activity {
 
     final int[] ids = new int[]{ 0 , R.id.stage1 , R.id.stage2 , R.id.stage3 };
     MediaPlayer mediaPlayer;
-    SharedPreferences sharedPreferences = getSharedPreferences( "db" , MODE_PRIVATE );
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.menupage );
-
+        sharedPreferences = getSharedPreferences( "db" , MODE_PRIVATE );
         ImageView mute = (ImageView)findViewById( R.id.mute );
         sharedPreferences.edit().putBoolean( "mute" , false ).apply();
 
         mute.setOnClickListener(
-            new View.OnClickListener() {
+            new ImageView.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sharedPreferences.edit().putBoolean( "mute" ,
-                            !sharedPreferences.getBoolean( "mute" , false )
 
-                    ).apply();
+                    if ( sharedPreferences.getBoolean( "mute" , false ) ) {
+
+                        sharedPreferences.edit().putBoolean("mute",  false   ).apply();
+                        if ( !mediaPlayer.isPlaying() )
+                            mediaPlayer.start();
+                        ((ImageView)v).setImageResource( R.drawable.audio45 );
+                    }
+                    else{
+                        sharedPreferences.edit().putBoolean("mute",  true   ).apply();
+                        if ( mediaPlayer.isPlaying() )
+                            mediaPlayer.pause();
+
+                        ((ImageView)v).setImageResource( R.drawable.volume_control );
+                    }
                 }
             }
 
