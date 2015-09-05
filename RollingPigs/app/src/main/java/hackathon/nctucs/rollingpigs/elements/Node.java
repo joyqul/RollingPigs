@@ -4,9 +4,11 @@ import android.animation.ObjectAnimator;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
@@ -17,6 +19,8 @@ import java.util.Map;
  */
 public class Node {
 
+
+    public boolean valid;
     private int id, onSId, color;
     private int radius;
     private int src;
@@ -47,16 +51,31 @@ public class Node {
     public double getRadius(){
         return radius;
     }
-    public void animate( int circleX , int circleY , int circleR , int fromX , int fromY , int targetX , int targetY ){
+    public int getColor(){
+        return color;
+    }
+    public void animate( int circleX , int circleY , int circleR , int fromX , int fromY , int targetX , int targetY  ){
 
-        radius *= 2;
-        final RectF rect = new RectF( circleX-radius , circleY-radius , circleX+radius , circleY+radius );
 
+        final RectF rect = new RectF( circleX-circleR-radius , circleY-circleR-radius , circleX+circleR-radius , circleY+circleR-radius );
+        Log.e( "" + (circleX - circleR) , "" + (circleX+circleR));
+        Log.e( "" + (circleY - circleR) , "" + (circleY+circleR));
         Path path = new Path();
-        path.addArc( rect , 0  , 360 );
+        int[] deg = degreeRange( circleX , circleY , fromX , fromY , targetX , targetY );
+
+        Log.e( "!!!!" , circleX + " " + circleY + " " + fromX + " " + fromY + " " + targetX + " " + targetY );
+
+        Log.e( deg[0] + " ", deg[1]  + " ");
+
+
+
+        path.addArc( rect , deg[0]  , (deg[1]-deg[0] + 360) % 360 );
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(img, View.X, View.Y, path);
         objectAnimator.setDuration( 1000 );
+
         objectAnimator.start();
+
+
 
     }
     public void setOnSId( int _sid ){

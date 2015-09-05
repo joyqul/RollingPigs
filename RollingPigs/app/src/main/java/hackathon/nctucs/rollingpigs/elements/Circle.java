@@ -1,5 +1,6 @@
 package hackathon.nctucs.rollingpigs.elements;
 
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Circle {
     private int src;
     private int id, color, x, y;
     private double radius;
-    private List< Integer > slots = new ArrayList();
+    public List< Integer > slots = new ArrayList();
     private Map< Integer , Node > m_nodes;
     private Map< Integer , Slot > m_slots;
     public ImageView img;
@@ -38,6 +39,9 @@ public class Circle {
     }
     public int getSrc(){
         return src;
+    }
+    public int getColor(){
+        return color;
     }
     public double getRadius(){
         return radius;
@@ -64,16 +68,22 @@ public class Circle {
             int now_sid    = slots.get( i );
             int target_sid = slots.get( (i+1)%slots.size() );
 
+            Log.e( "fromX  fromY" , m_slots.get( now_sid ).getX() + " " +
+                    m_slots.get( now_sid ).getY() );
+            Log.e( "toX  toY" , m_slots.get( target_sid ).getX() + " " +
+                    m_slots.get( target_sid ).getY() );
 
             nodes.get( i ).animate(
                 x,
                 y,
-                2*(int)radius,
+                (int)radius,
                 m_slots.get( now_sid ).getX(),
                 m_slots.get( now_sid ).getY(),
                 m_slots.get( target_sid ).getX(),
                 m_slots.get( target_sid ).getY()
             );
+
+            Log.e("animate" , now_sid + " " + target_sid);
 
             nodes.get( i ).setOnSId( target_sid )   ;
             m_slots.get( target_sid ).setContent( nodes.get( i ).getId() );

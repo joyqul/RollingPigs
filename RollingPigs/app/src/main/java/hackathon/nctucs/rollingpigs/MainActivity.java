@@ -32,7 +32,8 @@ public class MainActivity extends Activity {
 
     private final int[] stages = new int[]{ R.raw.stage1 , R.raw.stage1};
     private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle };
-    private final int[] nodeSrc   = new int[]{ R.drawable.bird_blue , R.drawable.bird_blue , R.drawable.bird_red , R.drawable.bird_yellow };
+    private final int[] nodeSrc   = new int[]{ R.drawable.pig_black , R.drawable.pig_blue , R.drawable.pig_green
+    , R.drawable.pig_org , R.drawable.pig_pink};
 
     Map< Integer , Circle > circles = new HashMap<>();
     Map< Integer , Node >   nodes = new HashMap<>();
@@ -65,6 +66,41 @@ public class MainActivity extends Activity {
 
     private void rotateCircle( int key ){
         circles.get( key ).rotate();
+
+    }
+
+    private void checkWin(){
+        int cnt = 0;
+        Set<Integer> nKey = nodes.keySet();
+
+        for ( int key : nKey )
+            nodes.get( key ).valid = false;
+
+        Set<Integer> cKey = circles.keySet();
+
+        for ( int key : cKey ){
+
+            for ( int s_id : circles.get( key ).slots ){
+
+                int n_id = slots.get( s_id ).getContent();
+
+                if ( (nodes.get( n_id ).getColor() & circles.get( key ).getColor()) != 0 ){
+                    if ( !nodes.get( n_id ).valid ){
+                        nodes.get( n_id ).valid = true;
+                        cnt++;
+                    }
+                }
+
+            }
+
+
+        }
+
+        if ( cnt == slots.size() ){
+            Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
+
+        }
+
 
     }
 
@@ -116,8 +152,10 @@ public class MainActivity extends Activity {
                      @Override
                      public void onClick(View v) {
                            rotateCircle( (int)v.getTag() );
+                           checkWin();
                      }
                  }
+
             );
 
             container.addView( imageView );
