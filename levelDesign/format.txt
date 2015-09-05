@@ -1,2 +1,0 @@
-Circle's radius in px
-Corresponding color's id
