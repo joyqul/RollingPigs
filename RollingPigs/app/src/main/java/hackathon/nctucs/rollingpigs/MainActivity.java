@@ -40,9 +40,11 @@ public class MainActivity extends Activity {
     SharedPreferences sharedPreferences;
     private final int[] stages = new int[]{ R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
     R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom};
-    private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle , R.drawable.circle };
-    private final int[] nodeSrc   = new int[]{ R.drawable.pig_black , R.drawable.pig_blue , R.drawable.pig_green
-    , R.drawable.pig_org , R.drawable.pig_pink};
+    private final int[] circleSrc = new int[]{ R.drawable.circle_blue3 , R.drawable.pink_circle3 , R.drawable.circle_green3 , R.drawable.circle_gray3 };
+    private final int[] nodeSrc   = new int[]{ 0 , R.drawable.pig_blue , R.drawable.pig_pink , 0 , R.drawable.pig_green , 0 ,
+            0 , 0 , R.drawable.pig_black
+
+    };
 
     Map< Integer , Circle > circles = new HashMap<>();
     Map< Integer , Node >   nodes = new HashMap<>();
