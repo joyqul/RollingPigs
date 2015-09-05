@@ -1,15 +1,13 @@
 package hackathon.nctucs.rollingpigs.elements;
 
-import android.util.Log;
 import android.widget.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Shamrock on 2015/9/5.
+ * Modified by Deepshine.
  */
+
 public class Circle {
 
     private int src;
@@ -29,8 +27,25 @@ public class Circle {
         src = _src;
     }
     public void addSlot( Integer _slot ){
-        slots.add( _slot );
+        slots.add(_slot);
+		Collections.sort(slots, new Cmp());
     }
+
+	class Cmp implements Comparator<Integer>{
+
+		@Override
+		public int compare(Integer a, Integer b){
+			Slot lhs = m_slots.get(a);
+			Slot rhs = m_slots.get(b);
+			int v1x = lhs.getX() - x, v1y = lhs.getY() - y;
+			int v2x = rhs.getX() - x, v2y = rhs.getY() - y;
+			double d1 = Math.atan2(v1y, v1x);
+			double d2 = Math.atan2(v2y, v2x);
+			return Double.compare(d1, d2);
+		}
+
+	}
+
     public int getX(){
         return x;
     }
@@ -50,9 +65,11 @@ public class Circle {
         m_nodes = _nodes;
         m_slots = _slots;
 
-    }
-    public void rotate(){
 
+
+    }
+
+    public void rotate(){
 
         List<Integer> r_slots = new ArrayList<>();
         List<Node> nodes = new ArrayList<>();
@@ -61,18 +78,14 @@ public class Circle {
             nodes.add( m_nodes.get( m_slots.get( s_id ).getContent() ) );
         }
 
-
         for ( int i = 0 ; i < slots.size() ; i++ ){
-
 
             int now_sid    = slots.get( i );
             int target_sid = slots.get( (i+1)%slots.size() );
-
-            Log.e( "fromX  fromY" , m_slots.get( now_sid ).getX() + " " +
+            /*Log.e( "fromX  fromY" , m_slots.get( now_sid ).getX() + " " +
                     m_slots.get( now_sid ).getY() );
             Log.e( "toX  toY" , m_slots.get( target_sid ).getX() + " " +
-                    m_slots.get( target_sid ).getY() );
-
+                    m_slots.get( target_sid ).getY() );*/
             nodes.get( i ).animate(
                 x,
                 y,
@@ -82,17 +95,10 @@ public class Circle {
                 m_slots.get( target_sid ).getX(),
                 m_slots.get( target_sid ).getY()
             );
-
-            Log.e("animate" , now_sid + " " + target_sid);
-
+           // Log.e("animate" , now_sid + " " + target_sid);
             nodes.get( i ).setOnSId( target_sid )   ;
             m_slots.get( target_sid ).setContent( nodes.get( i ).getId() );
         }
-
-
-
-
     }
-
 
 }
