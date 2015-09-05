@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
 
     private final int[] stages = new int[]{ R.raw.lv01json, R.raw.lv01json, R.raw.lv02Json,
-    R.raw.lv03Json, R.raw.lv04Json, R.raw.lv05Json, R.raw.lv06Json, R.raw.lv07Json};
+    R.raw.lv03Json, R.raw.lv04Json, R.raw.lv05json, R.raw.lv06Json, R.raw.lv07Json};
     private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle , R.drawable.circle };
     private final int[] nodeSrc   = new int[]{ R.drawable.pig_black , R.drawable.pig_blue , R.drawable.pig_green
     , R.drawable.pig_org , R.drawable.pig_pink};
