@@ -1,10 +1,12 @@
 package hackathon.nctucs.rollingpigs;
 
 import android.app.Activity;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -61,6 +63,12 @@ public class MainActivity extends Activity {
 
     }
 
+    private void rotateCircle( int key ){
+        circles.get( key ).rotate();
+
+    }
+
+
     private void drawElements(){
 
 
@@ -83,8 +91,8 @@ public class MainActivity extends Activity {
             ImageView imageView = new ImageView( this );
             imageView.setScaleType( ImageView.ScaleType.FIT_XY );
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams( radius*2 , radius*2 );
-            params.gravity = Gravity.TOP;
-            params.setMargins( circle.getX() + radius , circle.getY() + radius , 0 , 0 );
+            params.gravity = Gravity.TOP | Gravity.LEFT;
+            params.setMargins( circle.getX() - radius , circle.getY() - radius , 0 , 0 );
 
             imageView.setImageResource( circle.getSrc() );
             imageView.setLayoutParams( params );
@@ -92,6 +100,29 @@ public class MainActivity extends Activity {
             circle.img = imageView;
 
             container.addView( imageView );
+
+            // this is the button to click
+            imageView = new ImageView( this );
+            imageView.setScaleType( ImageView.ScaleType.FIT_XY );
+            params = new FrameLayout.LayoutParams( radius/2 , radius/2 );
+            params.gravity = Gravity.TOP | Gravity.LEFT;
+            params.setMargins( circle.getX() -radius/4 , circle.getY()-radius/4 , 0 , 0 );
+            imageView.setImageResource( circle.getSrc() );
+            imageView.setLayoutParams( params );
+
+            imageView.setTag( key );
+            imageView.setOnClickListener(
+                 new ImageView.OnClickListener(){
+                     @Override
+                     public void onClick(View v) {
+                           rotateCircle( (int)v.getTag() );
+                     }
+                 }
+            );
+
+            container.addView( imageView );
+
+
         }
 
 
@@ -111,7 +142,7 @@ public class MainActivity extends Activity {
             imageView.setScaleType( ImageView.ScaleType.FIT_XY );
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams( radius*2 , radius*2 );
             params.gravity = Gravity.TOP;
-            params.setMargins( slots.get( node.getOnSId() ).getX() + radius , slots.get( node.getOnSId() ).getY() + radius , 0 , 0 );
+            params.setMargins( slots.get( node.getOnSId() ).getX() - radius , slots.get( node.getOnSId() ).getY() - radius , 0 , 0 );
 
             imageView.setImageResource(node.getSrc());
             imageView.setLayoutParams( params );
@@ -173,13 +204,14 @@ public class MainActivity extends Activity {
                             circleSrc[ stageInfo.getInt( "src" ) ]
                     );
 
-                    
+
 
                     JSONArray slot = stageInfo.getJSONArray("slots");
 
                     for (int i = 0; i < slot.length(); i++)
                         circle.addSlot( slot.getInt(i) );
 
+                    circle.setAttr( nodes , slots );
 
                     circles.put(stageInfo.getInt("id"), circle);
 

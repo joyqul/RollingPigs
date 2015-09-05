@@ -27,5 +27,7 @@ public class Slot {
     public int getContent(){
         return content;
     }
-
+    public void setContent( int _content ){
+        content = _content;
+    }
 }
