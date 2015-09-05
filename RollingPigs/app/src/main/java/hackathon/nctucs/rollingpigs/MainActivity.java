@@ -223,10 +223,12 @@ public class MainActivity extends Activity {
 
     private void updateCnt(){
         cnt += 1;
-        step.setText( "Step : " + cnt );
-        Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT);
-		for(Node n : nodes.values()){
-			n.freezeEffect();
+        step.setText("Step : "+cnt);
+		if(cnt % 10 == 0){
+			Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT);
+			for(Node n : nodes.values()){
+				n.freezeEffect();
+			}
 		}
     }
 
