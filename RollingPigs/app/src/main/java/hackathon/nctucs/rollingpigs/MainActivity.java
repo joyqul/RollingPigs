@@ -303,17 +303,9 @@ public class MainActivity extends Activity{
 			imageView.setLayoutParams(params);
 			imageView.bringToFront();
 			imageView.setTag(key);
-
-
-			//container.addView( imageView );
-
-
 		}
 
-
 		// draw the nodes
-
-
 		Set<Integer> nSet = nodes.keySet();
 
 		for(int key : nSet){
@@ -330,16 +322,11 @@ public class MainActivity extends Activity{
 			imageView.setImageResource(node.getSrc());
 			imageView.setLayoutParams(params);
 
-
 			node.img = imageView;
 
 			container.addView(imageView);
-
 		}
-
-
 	}
-
 
 	private void initStage(int stage) throws IOException, JSONException{
 
@@ -347,12 +334,8 @@ public class MainActivity extends Activity{
 		Log.e("stage", "stage"+stage);
 
 		// requires read file
-
-
 		InputStreamReader inputStreamReader = new InputStreamReader(getResources().openRawResource(stages[stage]));
-
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
 
 		String input = bufferedReader.readLine();
 
@@ -368,7 +351,6 @@ public class MainActivity extends Activity{
 
 				if(stageInfo.getString("type").equals("circle")){
 
-
 					Circle circle = new Circle(
 							stageInfo.getInt("id"),
 							stageInfo.getInt("color"),
@@ -377,7 +359,6 @@ public class MainActivity extends Activity{
 							stageInfo.getDouble("radius"),
 							circleSrc[stageInfo.getInt("src")]
 					);
-
 
 					JSONArray slot = stageInfo.getJSONArray("slots");
 
