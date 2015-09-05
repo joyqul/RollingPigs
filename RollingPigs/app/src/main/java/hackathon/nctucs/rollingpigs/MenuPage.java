@@ -21,7 +21,7 @@ public class MenuPage extends Activity {
         setContentView( R.layout.menupage );
 
 
-        for ( int i = 1 ; i <= 1  ; i++ ){
+        for ( int i = 1 ; i <= 3  ; i++ ){
             ImageView img = (ImageView)findViewById( ids[i] );
             img.setTag( i );
             img.setOnClickListener(
