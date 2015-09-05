@@ -77,7 +77,7 @@ public class Generator{
 		node1.put("src", 0);
 		node1.put("onSId", 0);
 		node1.put("color", 0x100);
-		node1.put("radius", 5);
+		node1.put("radius", 50);
 		result.put(node1);
 
 		JSONObject node2 = new JSONObject();
@@ -86,7 +86,7 @@ public class Generator{
 		node2.put("src", 1);
 		node2.put("onSId", 1);
 		node2.put("color", 0x10);
-		node2.put("radius", 5);
+		node2.put("radius", 50);
 		result.put(node2);
 
 		JSONObject node3 = new JSONObject();
@@ -95,7 +95,7 @@ public class Generator{
 		node3.put("src", 2);
 		node3.put("onSId", 2);
 		node3.put("color", 0x1);
-		node3.put("radius", 5);
+		node3.put("radius", 50);
 		result.put(node3);
 
 		System.out.println(result.toString());
