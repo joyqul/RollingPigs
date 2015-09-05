@@ -1,11 +1,168 @@
 import Json.JSONArray;
 import Json.JSONObject;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.*;
+import java.util.*;
 
 public class Generator{
 
+	static ArrayList<Circle> circleList;
+	static ArrayList<Slot> slotList;
+	static ArrayList<Node> nodeList;
+
 	public static void main(String[] args) throws Exception{
 		PrintWriter out = new PrintWriter("TestStage.txt");
+		JSONArray result = testStage();
+		System.out.println(result.toString());
+		out.println(result.toString());
+		out.flush();
+		out.close();
+	}
+
+	static void readImage(String fileName) throws Exception{
+		BufferedImage image = ImageIO.read(new File(fileName));
+		final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+		final int width = image.getWidth();
+		final int height = image.getHeight();
+		final double widthRatio = 768.0 / width;
+		final double heightRatio = 1280.0 / height;
+		final boolean hasAlphaChannel = image.getAlphaRaster() != null;
+		if(hasAlphaChannel) throw new InputMismatchException("ALPHA!!!!!");
+		final int pixelLength = 3;
+		for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength) {
+			int argb = 0;
+			argb += ((int) pixels[pixel] & 0xff); // blue
+			argb += (((int) pixels[pixel + 1] & 0xff) << 8); // green
+			argb += (((int) pixels[pixel + 2] & 0xff) << 16); // red
+			int x = ((int)(col*widthRatio));
+			int y = ((int)(row*heightRatio));
+			boolean tooClose = false;
+			switch(argb){
+				case 0x0000ff:
+					for(Circle c : circleList){
+						if(Math.abs(c.x-x) + Math.abs(c.y-y) < 50){
+							tooClose = true;
+							break;
+						}
+					}
+					if(!tooClose) new Circle(x, y);
+					break;
+				case 0xff0000:
+				case 0x00ff00:
+				case 0xffff00:
+				case 0xff00ff:
+				case 0xffffff:
+					for(Slot s : slotList){
+						if(Math.abs(s.x-x) + Math.abs(s.y-y) < 50){
+							tooClose = true;
+							break;
+						}
+					}
+					if(!tooClose) new Slot(x, y, argb);
+					break;
+			}
+			col++;
+			if (col == width) {
+				col = 0;
+				row++;
+			}
+		}
+	}
+
+	static class Circle{
+
+		static int counter = 0;
+		final String type = "circle";
+		int id, src, color, x, y, radius;
+		JSONArray slots;
+
+		Circle(){
+			id = counter;
+			slots = new JSONArray();
+			counter++;
+			circleList.add(this);
+		}
+
+		Circle(int x, int y){
+			this();
+			this.x = x;
+			this.y = y;
+		}
+
+		JSONObject toJSONObject(){
+			JSONObject obj = new JSONObject();
+			obj.put("type", type);
+			obj.put("id", id);
+			obj.put("src", src);
+			obj.put("color", color);
+			obj.put("x", x);
+			obj.put("y", y);
+			obj.put("radius", radius);
+			obj.put("slots", slots);
+			return obj;
+		}
+
+	}
+
+	static class Slot{
+
+		static int counter = 0;
+		final String type = "slot";
+		int id, x, y, content;
+
+		Slot(){
+			id = counter++;
+			slotList.add(this);
+		}
+
+		Slot(int x, int y, int color){
+			this();
+			this.x = x;
+			this.y = y;
+			Node newNode = new Node(id, color);
+			content = newNode.id;
+		}
+
+		JSONObject toJSONObject(){
+			JSONObject obj = new JSONObject();
+			obj.put("type", type);
+			obj.put("id", id);
+			obj.put("x", x);
+			obj.put("y", y);
+			obj.put("content", content);
+			return obj;
+		}
+	}
+
+	static class Node{
+
+		static int counter = 0;
+		final int[] mapping = {0xff0000, 0x00ff00, 0xffff00, 0xff00ff, 0xffffff};
+		final String type = "node";
+		int id, src, onSId, color;
+
+		Node(int onSId, int colorCode){
+			id = counter++;
+			this.onSId = onSId;
+			for(int i=0;i<5;i++) if(mapping[i] == colorCode) color = i;
+			nodeList.add(this);
+		}
+
+		JSONObject toJSONObject(){
+			JSONObject obj = new JSONObject();
+			obj.put("type", type);
+			obj.put("id", id);
+			obj.put("src", src);
+			obj.put("onSId", onSId);
+			obj.put("color", color);
+			return obj;
+		}
+	}
+
+	static JSONArray testStage(){
 		JSONArray result = new JSONArray();
 
 		JSONObject circle1 = new JSONObject();
@@ -98,10 +255,7 @@ public class Generator{
 		node3.put("radius", 50);
 		result.put(node3);
 
-		System.out.println(result.toString());
-		out.println(result.toString());
-		out.flush();
-		out.close();
+		return result;
 	}
 
 }

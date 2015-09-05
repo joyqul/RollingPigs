@@ -32,8 +32,12 @@
 4. checkWin
 	For each circle, check nodes in slots
 
-5. 
-	
-
-
-	
+5. Color translate
+    - turntable: (0, 0, 255)
+    - nodes:
+        - (255, 0, 0)
+        - (0, 255, 0)
+        - (255, 255, 0)
+        - (255, 0, 255)
+        - (255, 255, 255)
+    - id: top to down, left to right
