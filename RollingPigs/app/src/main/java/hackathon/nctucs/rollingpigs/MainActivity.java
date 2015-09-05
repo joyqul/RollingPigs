@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,7 +35,7 @@ import hackathon.nctucs.rollingpigs.elements.Slot;
 
 public class MainActivity extends Activity {
 
-
+    SharedPreferences sharedPreferences;
     private final int[] stages = new int[]{ R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
     R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom};
     private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle , R.drawable.circle };
@@ -47,11 +48,12 @@ public class MainActivity extends Activity {
 
     ImageView reset ;
     TextView step;
-
+    AlertDialog alg;
     int cnt = 0 , stage = -1;
+    boolean flag = false;
 
     private void reloadStage(){
-        cnt = 0;
+        cnt = 0; flag = false;
         step.setText( "Step : "+cnt );
         try {
             initStage(stage);
@@ -69,7 +71,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText( getApplicationContext() , "started" , Toast.LENGTH_LONG ).show();
-
+        sharedPreferences = getSharedPreferences( "db" , MODE_PRIVATE );
         stage = getIntent().getIntExtra( "stage" , -1 );
 
         step = (TextView)findViewById( R.id.score );
@@ -102,7 +104,7 @@ public class MainActivity extends Activity {
     }
 
     private void checkWin(){
-        int cnt = 0;
+        int cntw = 0;
         Set<Integer> nKey = nodes.keySet();
 
         for ( int key : nKey )
@@ -119,7 +121,7 @@ public class MainActivity extends Activity {
                 if ( (nodes.get( n_id ).getColor() & circles.get( key ).getColor()) != 0 ){
                     if ( !nodes.get( n_id ).valid ){
                         nodes.get( n_id ).valid = true;
-                        cnt++;
+                        cntw++;
                     }
                 }
 
@@ -128,40 +130,58 @@ public class MainActivity extends Activity {
 
         }
 
-        if ( cnt == slots.size() ){
+        if ( cntw == slots.size() ){
 
-
-            AlertDialog.Builder builder = new AlertDialog.Builder( this );
+            final int st = stage;
+            final AlertDialog.Builder builder = new AlertDialog.Builder( this );
 
             View view = getLayoutInflater().inflate( R.layout.successdialog , null );
             ImageView img = (ImageView)view.findViewById( R.id.next_step );
-            img.setOnClickListener(
-                  new View.OnClickListener() {
-                      @Override
-                      public void onClick(View v) {
-                          stage += 1;
-                          try {
-                              initStage(stage);
-                          }
-                          catch ( Exception e ){
-                              e.printStackTrace();
-                          }
-                      }
-                  }
 
-
-            );
 
             builder.setView( view );
             builder.setOnDismissListener(
                 new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        MainActivity.this.finish();
+                        if ( !flag )
+                            MainActivity.this.finish();
                     }
                 }
             );
-            builder.create().show();
+            alg = builder.create();
+
+            img.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            stage += 1;
+                            try {
+                                reloadStage();
+                                flag = true;
+                                alg.dismiss();
+
+                            }
+                            catch ( Exception e ){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+
+            );
+
+            TextView yourScore = (TextView) view.findViewById( R.id.your_score );
+            yourScore.setText( "Your score : " + cnt );
+
+            int prev = sharedPreferences.getInt( ""+st , 1000 );
+            if ( cnt < prev )
+                sharedPreferences.edit().putInt( ""+st , cnt );
+            prev = Math.min( prev , cnt );
+
+            ((TextView) view.findViewById( R.id.high_score ) ).setText( "High score : " + prev );
+
+            alg.show();
 
             Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
 
@@ -370,6 +390,12 @@ public class MainActivity extends Activity {
         catch( Exception e ){
             e.printStackTrace();
         }
+
+
+
+        for ( Circle c : circles.values())
+               c.sortSlots();
+
 
 
 
