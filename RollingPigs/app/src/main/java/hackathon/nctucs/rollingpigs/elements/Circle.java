@@ -28,7 +28,12 @@ public class Circle {
     }
     public void addSlot( Integer _slot ){
         slots.add(_slot);
-		Collections.sort(slots, new Cmp());
+
+    }
+
+    public void sortSlots(){
+        Collections.sort(slots, new Cmp());
+
     }
 
 	class Cmp implements Comparator<Integer>{
