@@ -1,5 +1,6 @@
 package hackathon.nctucs.rollingpigs.elements;
 
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import java.util.*;
 
@@ -100,6 +101,14 @@ public class Circle {
                 m_slots.get( target_sid ).getX(),
                 m_slots.get( target_sid ).getY()
             );
+
+            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)nodes.get(i).img.getLayoutParams();
+            lp.setMargins( (int)(m_slots.get( target_sid ).getX() - nodes.get( i ).getRadius() )
+            ,(int)(m_slots.get( target_sid ).getY() - nodes.get( i ).getRadius() ),
+            0 , 0
+            );
+            nodes.get( i ).img.setLayoutParams( lp );
+
            // Log.e("animate" , now_sid + " " + target_sid);
             nodes.get( i ).setOnSId( target_sid )   ;
             m_slots.get( target_sid ).setContent( nodes.get( i ).getId() );
