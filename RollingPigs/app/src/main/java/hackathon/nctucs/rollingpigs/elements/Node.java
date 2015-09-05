@@ -75,13 +75,15 @@ public class Node{
 		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(img, View.X, View.Y, path);
 		objectAnimator.setDuration(1000);
 
-		ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(img, "rotate", 0.0f, 360.0f);
-		rotateAnimator.setDuration(1000);
+		ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(img, "rotation", 0.0f, 360.0f);
+		rotateAnimator.setDuration( 250 );
+        rotateAnimator.setRepeatCount( 4 );
 
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.play(objectAnimator).with(rotateAnimator);
 		animatorSet.start();
-		//objectAnimator.start();
+
+		//rotateAnimator.start();
 
 		/*Animation animation = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 		animation.setRepeatCount(0);
