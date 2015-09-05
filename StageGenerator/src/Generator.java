@@ -1,6 +1,3 @@
-import Json.JSONArray;
-import Json.JSONObject;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;

@@ -63,4 +63,10 @@ public class Node {
         onSId = _sid;
     }
 
+	int[] degreeRange(int centerX, int centerY, int startX, int startY, int targetX, int targetY){
+		int v1X = startX - centerX, v1Y = startY - centerY;
+		int v2X = targetX - centerX, v2Y = targetY - centerY;
+		return new int[]{(int)(Math.atan2(v1Y, v1X)*180/Math.PI), (int)(Math.atan2(v2Y, v2X)*180/Math.PI)};
+	}
+
 }
