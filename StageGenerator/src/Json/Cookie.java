@@ -1,4 +1,4 @@
-/*
+package Json;/*
 Copyright (c) 2002 JSON.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,12 +23,11 @@ SOFTWARE.
 */
 
 /**
- * Convert a web browser cookie specification to a JSONObject and back.
+ * Convert a web browser cookie specification to a Json.JSONObject and back.
  * JSON and Cookies are both notations for name/value pairs.
  * @author JSON.org
  * @version 2014-05-03
  */
-package Json;
 public class Cookie {
 
     /**
@@ -63,7 +62,7 @@ public class Cookie {
 
 
     /**
-     * Convert a cookie specification string into a JSONObject. The string
+     * Convert a cookie specification string into a Json.JSONObject. The string
      * will contain a name value pair separated by '='. The name and the value
      * will be unescaped, possibly converting '+' and '%' sequences. The
      * cookie properties may follow, separated by ';', also represented as
@@ -71,9 +70,9 @@ public class Cookie {
      * The name will be stored under the key "name", and the value will be
      * stored under the key "value". This method does not do checking or
      * validation of the parameters. It only converts the cookie string into
-     * a JSONObject.
+     * a Json.JSONObject.
      * @param string The cookie specification string.
-     * @return A JSONObject containing "name", "value", and possibly other
+     * @return A Json.JSONObject containing "name", "value", and possibly other
      *  members.
      * @throws JSONException
      */
@@ -105,12 +104,12 @@ public class Cookie {
 
 
     /**
-     * Convert a JSONObject into a cookie specification string. The JSONObject
+     * Convert a Json.JSONObject into a cookie specification string. The Json.JSONObject
      * must contain "name" and "value" members.
-     * If the JSONObject contains "expires", "domain", "path", or "secure"
+     * If the Json.JSONObject contains "expires", "domain", "path", or "secure"
      * members, they will be appended to the cookie specification string.
      * All other members are ignored.
-     * @param jo A JSONObject
+     * @param jo A Json.JSONObject
      * @return A cookie specification string
      * @throws JSONException
      */

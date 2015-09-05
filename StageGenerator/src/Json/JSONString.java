@@ -1,12 +1,13 @@
+package Json;
+
 /**
- * The <code>JSONString</code> interface allows a <code>toJSONString()</code>
+ * The <code>Json.JSONString</code> interface allows a <code>toJSONString()</code>
  * method so that a class can change the behavior of
- * <code>JSONObject.toString()</code>, <code>JSONArray.toString()</code>,
- * and <code>JSONWriter.value(</code>Object<code>)</code>. The
+ * <code>Json.JSONObject.toString()</code>, <code>Json.JSONArray.toString()</code>,
+ * and <code>Json.JSONWriter.value(</code>Object<code>)</code>. The
  * <code>toJSONString</code> method will be used instead of the default behavior
  * of using the Object's <code>toString()</code> method and quoting the result.
  */
-package Json;
 public interface JSONString {
     /**
      * The <code>toJSONString</code> method allows a class to produce its own JSON

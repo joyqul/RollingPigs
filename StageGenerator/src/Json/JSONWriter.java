@@ -1,5 +1,5 @@
-
 package Json;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -28,20 +28,20 @@ SOFTWARE.
 */
 
 /**
- * JSONWriter provides a quick and convenient way of producing JSON text.
+ * Json.JSONWriter provides a quick and convenient way of producing JSON text.
  * The texts produced strictly conform to JSON syntax rules. No whitespace is
  * added, so the results are ready for transmission or storage. Each instance of
- * JSONWriter can produce one JSON text.
+ * Json.JSONWriter can produce one JSON text.
  * <p>
- * A JSONWriter instance provides a <code>value</code> method for appending
+ * A Json.JSONWriter instance provides a <code>value</code> method for appending
  * values to the
  * text, and a <code>key</code>
  * method for adding keys before values in objects. There are <code>array</code>
  * and <code>endArray</code> methods that make and bound array values, and
  * <code>object</code> and <code>endObject</code> methods which make and bound
- * object values. All of these methods return the JSONWriter instance,
+ * object values. All of these methods return the Json.JSONWriter instance,
  * permitting a cascade style. For example, <pre>
- * new JSONWriter(myWriter)
+ * new Json.JSONWriter(myWriter)
  *     .object()
  *         .key("JSON")
  *         .value("Hello, World!")
@@ -49,10 +49,10 @@ SOFTWARE.
  * {"JSON":"Hello, World!"}</pre>
  * <p>
  * The first method called must be <code>array</code> or <code>object</code>.
- * There are no methods for adding commas or colons. JSONWriter adds them for
+ * There are no methods for adding commas or colons. Json.JSONWriter adds them for
  * you. Objects and arrays can be nested up to 20 levels deep.
  * <p>
- * This can sometimes be easier than using a JSONObject to build a string.
+ * This can sometimes be easier than using a Json.JSONObject to build a string.
  * @author JSON.org
  * @version 2011-11-24
  */
@@ -91,7 +91,7 @@ public class JSONWriter {
     protected Writer writer;
 
     /**
-     * Make a fresh JSONWriter. It can be used to build one JSON text.
+     * Make a fresh Json.JSONWriter. It can be used to build one JSON text.
      */
     public JSONWriter(Writer w) {
         this.comma = false;
@@ -317,7 +317,7 @@ public class JSONWriter {
     /**
      * Append an object value.
      * @param object The object to append. It can be null, or a Boolean, Number,
-     *   String, JSONObject, or JSONArray, or an object that implements JSONString.
+     *   String, Json.JSONObject, or Json.JSONArray, or an object that implements Json.JSONString.
      * @return this
      * @throws JSONException If the value is out of sequence.
      */

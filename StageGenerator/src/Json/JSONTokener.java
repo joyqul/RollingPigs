@@ -1,5 +1,5 @@
-
 package Json;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,8 +32,8 @@ SOFTWARE.
 */
 
 /**
- * A JSONTokener takes a source string and extracts characters and tokens from
- * it. It is used by the JSONObject and JSONArray constructors to parse
+ * A Json.JSONTokener takes a source string and extracts characters and tokens from
+ * it. It is used by the Json.JSONObject and Json.JSONArray constructors to parse
  * JSON source strings.
  * @author JSON.org
  * @version 2014-05-03
@@ -50,7 +50,7 @@ public class JSONTokener {
 
 
     /**
-     * Construct a JSONTokener from a Reader.
+     * Construct a Json.JSONTokener from a Reader.
      *
      * @param reader     A reader.
      */
@@ -68,7 +68,7 @@ public class JSONTokener {
 
 
     /**
-     * Construct a JSONTokener from an InputStream.
+     * Construct a Json.JSONTokener from an InputStream.
      * @param inputStream The source.
      */
     public JSONTokener(InputStream inputStream) throws JSONException {
@@ -77,7 +77,7 @@ public class JSONTokener {
 
 
     /**
-     * Construct a JSONTokener from a string.
+     * Construct a Json.JSONTokener from a string.
      *
      * @param s     A source string.
      */
@@ -346,7 +346,7 @@ public class JSONTokener {
 
     /**
      * Get the next value. The value can be a Boolean, Double, Integer,
-     * JSONArray, JSONObject, Long, or String, or the JSONObject.NULL object.
+     * Json.JSONArray, Json.JSONObject, Long, or String, or the Json.JSONObject.NULL object.
      * @throws JSONException If syntax error.
      *
      * @return An object.
@@ -424,10 +424,10 @@ public class JSONTokener {
 
 
     /**
-     * Make a JSONException to signal a syntax error.
+     * Make a Json.JSONException to signal a syntax error.
      *
      * @param message The error message.
-     * @return  A JSONException object, suitable for throwing
+     * @return  A Json.JSONException object, suitable for throwing
      */
     public JSONException syntaxError(String message) {
         return new JSONException(message + this.toString());
@@ -435,7 +435,7 @@ public class JSONTokener {
 
 
     /**
-     * Make a printable string of this JSONTokener.
+     * Make a printable string of this Json.JSONTokener.
      *
      * @return " at {index} [character {character} line {line}]"
      */

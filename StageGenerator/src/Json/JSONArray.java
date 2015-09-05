@@ -1,4 +1,4 @@
-/*
+package Json;/*
  Copyright (c) 2002 JSON.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,7 +22,6 @@
  SOFTWARE.
  */
 
-package Json;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -34,14 +33,14 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * A JSONArray is an ordered sequence of values. Its external text form is a
+ * A Json.JSONArray is an ordered sequence of values. Its external text form is a
  * string wrapped in square brackets with commas separating the values. The
  * internal form is an object having <code>get</code> and <code>opt</code>
  * methods for accessing the values by index, and <code>put</code> methods for
  * adding or replacing values. The values can be any of these types:
- * <code>Boolean</code>, <code>JSONArray</code>, <code>JSONObject</code>,
+ * <code>Boolean</code>, <code>Json.JSONArray</code>, <code>Json.JSONObject</code>,
  * <code>Number</code>, <code>String</code>, or the
- * <code>JSONObject.NULL object</code>.
+ * <code>Json.JSONObject.NULL object</code>.
  * <p>
  * The constructor can convert a JSON text into a Java object. The
  * <code>toString</code> method converts to JSON text.
@@ -80,29 +79,29 @@ import java.util.Map;
 public class JSONArray implements Iterable<Object> {
 
     /**
-     * The arrayList where the JSONArray's properties are kept.
+     * The arrayList where the Json.JSONArray's properties are kept.
      */
     private final ArrayList<Object> myArrayList;
 
     /**
-     * Construct an empty JSONArray.
+     * Construct an empty Json.JSONArray.
      */
     public JSONArray() {
         this.myArrayList = new ArrayList<Object>();
     }
 
     /**
-     * Construct a JSONArray from a JSONTokener.
+     * Construct a Json.JSONArray from a Json.JSONTokener.
      *
      * @param x
-     *            A JSONTokener
+     *            A Json.JSONTokener
      * @throws JSONException
      *             If there is a syntax error.
      */
     public JSONArray(JSONTokener x) throws JSONException {
         this();
         if (x.nextClean() != '[') {
-            throw x.syntaxError("A JSONArray text must start with '['");
+            throw x.syntaxError("A Json.JSONArray text must start with '['");
         }
         if (x.nextClean() != ']') {
             x.back();
@@ -131,7 +130,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Construct a JSONArray from a source JSON text.
+     * Construct a Json.JSONArray from a source JSON text.
      *
      * @param source
      *            A string that begins with <code>[</code>&nbsp;<small>(left
@@ -145,7 +144,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Construct a JSONArray from a Collection.
+     * Construct a Json.JSONArray from a Collection.
      *
      * @param collection
      *            A Collection.
@@ -161,7 +160,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Construct a JSONArray from an array
+     * Construct a Json.JSONArray from an array
      *
      * @throws JSONException
      *             If not an array.
@@ -175,7 +174,7 @@ public class JSONArray implements Iterable<Object> {
             }
         } else {
             throw new JSONException(
-                    "JSONArray initial value should be a string or collection or array.");
+                    "Json.JSONArray initial value should be a string or collection or array.");
         }
     }
 
@@ -196,7 +195,7 @@ public class JSONArray implements Iterable<Object> {
     public Object get(int index) throws JSONException {
         Object object = this.opt(index);
         if (object == null) {
-            throw new JSONException("JSONArray[" + index + "] not found.");
+            throw new JSONException("Json.JSONArray[" + index + "] not found.");
         }
         return object;
     }
@@ -223,7 +222,7 @@ public class JSONArray implements Iterable<Object> {
                         .equalsIgnoreCase("true"))) {
             return true;
         }
-        throw new JSONException("JSONArray[" + index + "] is not a boolean.");
+        throw new JSONException("Json.JSONArray[" + index + "] is not a boolean.");
     }
 
     /**
@@ -242,7 +241,7 @@ public class JSONArray implements Iterable<Object> {
             return object instanceof Number ? ((Number) object).doubleValue()
                     : Double.parseDouble((String) object);
         } catch (Exception e) {
-            throw new JSONException("JSONArray[" + index + "] is not a number.");
+            throw new JSONException("Json.JSONArray[" + index + "] is not a number.");
         }
     }
 
@@ -261,10 +260,10 @@ public class JSONArray implements Iterable<Object> {
     public <E extends Enum<E>> E getEnum(Class<E> clazz, int index) throws JSONException {
         E val = optEnum(clazz, index);
         if(val==null) {
-            // JSONException should really take a throwable argument.
+            // Json.JSONException should really take a throwable argument.
             // If it did, I would re-implement this with the Enum.valueOf
-            // method and place any thrown exception in the JSONException
-            throw new JSONException("JSONObject[" + JSONObject.quote(Integer.toString(index))
+            // method and place any thrown exception in the Json.JSONException
+            throw new JSONException("Json.JSONObject[" + JSONObject.quote(Integer.toString(index))
                     + "] is not an enum of type " + JSONObject.quote(clazz.getSimpleName())
                     + ".");
         }
@@ -286,7 +285,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             return new BigDecimal(object.toString());
         } catch (Exception e) {
-            throw new JSONException("JSONArray[" + index +
+            throw new JSONException("Json.JSONArray[" + index +
                     "] could not convert to BigDecimal.");
         }
     }
@@ -306,7 +305,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             return new BigInteger(object.toString());
         } catch (Exception e) {
-            throw new JSONException("JSONArray[" + index +
+            throw new JSONException("Json.JSONArray[" + index +
                     "] could not convert to BigInteger.");
         }
     }
@@ -326,44 +325,44 @@ public class JSONArray implements Iterable<Object> {
             return object instanceof Number ? ((Number) object).intValue()
                     : Integer.parseInt((String) object);
         } catch (Exception e) {
-            throw new JSONException("JSONArray[" + index + "] is not a number.");
+            throw new JSONException("Json.JSONArray[" + index + "] is not a number.");
         }
     }
 
     /**
-     * Get the JSONArray associated with an index.
+     * Get the Json.JSONArray associated with an index.
      *
      * @param index
      *            The index must be between 0 and length() - 1.
-     * @return A JSONArray value.
+     * @return A Json.JSONArray value.
      * @throws JSONException
      *             If there is no value for the index. or if the value is not a
-     *             JSONArray
+     *             Json.JSONArray
      */
     public JSONArray getJSONArray(int index) throws JSONException {
         Object object = this.get(index);
         if (object instanceof JSONArray) {
             return (JSONArray) object;
         }
-        throw new JSONException("JSONArray[" + index + "] is not a JSONArray.");
+        throw new JSONException("Json.JSONArray[" + index + "] is not a Json.JSONArray.");
     }
 
     /**
-     * Get the JSONObject associated with an index.
+     * Get the Json.JSONObject associated with an index.
      *
      * @param index
      *            subscript
-     * @return A JSONObject value.
+     * @return A Json.JSONObject value.
      * @throws JSONException
      *             If there is no value for the index or if the value is not a
-     *             JSONObject
+     *             Json.JSONObject
      */
     public JSONObject getJSONObject(int index) throws JSONException {
         Object object = this.get(index);
         if (object instanceof JSONObject) {
             return (JSONObject) object;
         }
-        throw new JSONException("JSONArray[" + index + "] is not a JSONObject.");
+        throw new JSONException("Json.JSONArray[" + index + "] is not a Json.JSONObject.");
     }
 
     /**
@@ -382,7 +381,7 @@ public class JSONArray implements Iterable<Object> {
             return object instanceof Number ? ((Number) object).longValue()
                     : Long.parseLong((String) object);
         } catch (Exception e) {
-            throw new JSONException("JSONArray[" + index + "] is not a number.");
+            throw new JSONException("Json.JSONArray[" + index + "] is not a number.");
         }
     }
 
@@ -400,7 +399,7 @@ public class JSONArray implements Iterable<Object> {
         if (object instanceof String) {
             return (String) object;
         }
-        throw new JSONException("JSONArray[" + index + "] not a string.");
+        throw new JSONException("Json.JSONArray[" + index + "] not a string.");
     }
 
     /**
@@ -415,7 +414,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Make a string from the contents of this JSONArray. The
+     * Make a string from the contents of this Json.JSONArray. The
      * <code>separator</code> string is inserted between each element. Warning:
      * This method assumes that the data structure is acyclical.
      *
@@ -439,7 +438,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Get the number of elements in the JSONArray, included nulls.
+     * Get the number of elements in the Json.JSONArray, included nulls.
      *
      * @return The length (or size).
      */
@@ -638,12 +637,12 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Get the optional JSONArray associated with an index.
+     * Get the optional Json.JSONArray associated with an index.
      *
      * @param index
      *            subscript
-     * @return A JSONArray value, or null if the index has no value, or if the
-     *         value is not a JSONArray.
+     * @return A Json.JSONArray value, or null if the index has no value, or if the
+     *         value is not a Json.JSONArray.
      */
     public JSONArray optJSONArray(int index) {
         Object o = this.opt(index);
@@ -651,13 +650,13 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Get the optional JSONObject associated with an index. Null is returned if
+     * Get the optional Json.JSONObject associated with an index. Null is returned if
      * the key is not found, or null if the index has no value, or if the value
-     * is not a JSONObject.
+     * is not a Json.JSONObject.
      *
      * @param index
      *            The index must be between 0 and length() - 1.
-     * @return A JSONObject value.
+     * @return A Json.JSONObject value.
      */
     public JSONObject optJSONObject(int index) {
         Object o = this.opt(index);
@@ -738,7 +737,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONArray which
+     * Put a value in the Json.JSONArray, where the value will be a Json.JSONArray which
      * is produced from a Collection.
      *
      * @param value
@@ -791,7 +790,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONObject which
+     * Put a value in the Json.JSONArray, where the value will be a Json.JSONObject which
      * is produced from a Map.
      *
      * @param value
@@ -808,8 +807,8 @@ public class JSONArray implements Iterable<Object> {
      *
      * @param value
      *            An object value. The value should be a Boolean, Double,
-     *            Integer, JSONArray, JSONObject, Long, or String, or the
-     *            JSONObject.NULL object.
+     *            Integer, Json.JSONArray, Json.JSONObject, Long, or String, or the
+     *            Json.JSONObject.NULL object.
      * @return this.
      */
     public JSONArray put(Object value) {
@@ -818,8 +817,8 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Put or replace a boolean value in the JSONArray. If the index is greater
-     * than the length of the JSONArray, then null elements will be added as
+     * Put or replace a boolean value in the Json.JSONArray. If the index is greater
+     * than the length of the Json.JSONArray, then null elements will be added as
      * necessary to pad it out.
      *
      * @param index
@@ -836,7 +835,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONArray which
+     * Put a value in the Json.JSONArray, where the value will be a Json.JSONArray which
      * is produced from a Collection.
      *
      * @param index
@@ -854,7 +853,7 @@ public class JSONArray implements Iterable<Object> {
 
     /**
      * Put or replace a double value. If the index is greater than the length of
-     * the JSONArray, then null elements will be added as necessary to pad it
+     * the Json.JSONArray, then null elements will be added as necessary to pad it
      * out.
      *
      * @param index
@@ -872,7 +871,7 @@ public class JSONArray implements Iterable<Object> {
 
     /**
      * Put or replace an int value. If the index is greater than the length of
-     * the JSONArray, then null elements will be added as necessary to pad it
+     * the Json.JSONArray, then null elements will be added as necessary to pad it
      * out.
      *
      * @param index
@@ -890,7 +889,7 @@ public class JSONArray implements Iterable<Object> {
 
     /**
      * Put or replace a long value. If the index is greater than the length of
-     * the JSONArray, then null elements will be added as necessary to pad it
+     * the Json.JSONArray, then null elements will be added as necessary to pad it
      * out.
      *
      * @param index
@@ -907,7 +906,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONObject that
+     * Put a value in the Json.JSONArray, where the value will be a Json.JSONObject that
      * is produced from a Map.
      *
      * @param index
@@ -925,16 +924,16 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Put or replace an object value in the JSONArray. If the index is greater
-     * than the length of the JSONArray, then null elements will be added as
+     * Put or replace an object value in the Json.JSONArray. If the index is greater
+     * than the length of the Json.JSONArray, then null elements will be added as
      * necessary to pad it out.
      *
      * @param index
      *            The subscript.
      * @param value
      *            The value to put into the array. The value should be a
-     *            Boolean, Double, Integer, JSONArray, JSONObject, Long, or
-     *            String, or the JSONObject.NULL object.
+     *            Boolean, Double, Integer, Json.JSONArray, Json.JSONObject, Long, or
+     *            String, or the Json.JSONObject.NULL object.
      * @return this.
      * @throws JSONException
      *             If the index is negative or if the the value is an invalid
@@ -943,7 +942,7 @@ public class JSONArray implements Iterable<Object> {
     public JSONArray put(int index, Object value) throws JSONException {
         JSONObject.testValidity(value);
         if (index < 0) {
-            throw new JSONException("JSONArray[" + index + "] not found.");
+            throw new JSONException("Json.JSONArray[" + index + "] not found.");
         }
         if (index < this.length()) {
             this.myArrayList.set(index, value);
@@ -974,7 +973,7 @@ public class JSONArray implements Iterable<Object> {
      * Determine if two JSONArrays are similar.
      * They must contain similar sequences.
      *
-     * @param other The other JSONArray
+     * @param other The other Json.JSONArray
      * @return true if they are equal
      */
     public boolean similar(Object other) {
@@ -1004,13 +1003,13 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Produce a JSONObject by combining a JSONArray of names with the values of
-     * this JSONArray.
+     * Produce a Json.JSONObject by combining a Json.JSONArray of names with the values of
+     * this Json.JSONArray.
      *
      * @param names
-     *            A JSONArray containing a list of key strings. These will be
+     *            A Json.JSONArray containing a list of key strings. These will be
      *            paired with the values.
-     * @return A JSONObject, or null if there are no names or if this JSONArray
+     * @return A Json.JSONObject, or null if there are no names or if this Json.JSONArray
      *         has no values.
      * @throws JSONException
      *             If any of the names are null.
@@ -1027,7 +1026,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Make a JSON text of this JSONArray. For compactness, no unnecessary
+     * Make a JSON text of this Json.JSONArray. For compactness, no unnecessary
      * whitespace is added. If it is not possible to produce a syntactically
      * correct JSON text then null will be returned instead. This could occur if
      * the array contains an invalid number.
@@ -1046,7 +1045,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Make a prettyprinted JSON text of this JSONArray. Warning: This method
+     * Make a prettyprinted JSON text of this Json.JSONArray. Warning: This method
      * assumes that the data structure is acyclical.
      *
      * @param indentFactor
@@ -1065,7 +1064,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Write the contents of the JSONArray as JSON text to a writer. For
+     * Write the contents of the Json.JSONArray as JSON text to a writer. For
      * compactness, no whitespace is added.
      * <p>
      * Warning: This method assumes that the data structure is acyclical.
@@ -1078,7 +1077,7 @@ public class JSONArray implements Iterable<Object> {
     }
 
     /**
-     * Write the contents of the JSONArray as JSON text to a writer. For
+     * Write the contents of the Json.JSONArray as JSON text to a writer. For
      * compactness, no whitespace is added.
      * <p>
      * Warning: This method assumes that the data structure is acyclical.

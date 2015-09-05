@@ -1,4 +1,4 @@
-/*
+package Json;/*
 Copyright (c) 2002 JSON.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,11 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package Json;
 import java.util.Iterator;
 
 /**
- * Convert an HTTP header to a JSONObject and back.
+ * Convert an Json.HTTP header to a Json.JSONObject and back.
  * @author JSON.org
  * @version 2014-05-03
  */
@@ -36,35 +35,35 @@ public class HTTP {
     public static final String CRLF = "\r\n";
 
     /**
-     * Convert an HTTP header string into a JSONObject. It can be a request
+     * Convert an Json.HTTP header string into a Json.JSONObject. It can be a request
      * header or a response header. A request header will contain
      * <pre>{
      *    Method: "POST" (for example),
      *    "Request-URI": "/" (for example),
-     *    "HTTP-Version": "HTTP/1.1" (for example)
+     *    "Json.HTTP-Version": "Json.HTTP/1.1" (for example)
      * }</pre>
      * A response header will contain
      * <pre>{
-     *    "HTTP-Version": "HTTP/1.1" (for example),
+     *    "Json.HTTP-Version": "Json.HTTP/1.1" (for example),
      *    "Status-Code": "200" (for example),
      *    "Reason-Phrase": "OK" (for example)
      * }</pre>
      * In addition, the other parameters in the header will be captured, using
-     * the HTTP field names as JSON names, so that <pre>
+     * the Json.HTTP field names as JSON names, so that <pre>
      *    Date: Sun, 26 May 2002 18:06:04 GMT
-     *    Cookie: Q=q2=PPEAsg--; B=677gi6ouf29bn&b=2&f=s
+     *    Json.Cookie: Q=q2=PPEAsg--; B=677gi6ouf29bn&b=2&f=s
      *    Cache-Control: no-cache</pre>
      * become
      * <pre>{...
      *    Date: "Sun, 26 May 2002 18:06:04 GMT",
-     *    Cookie: "Q=q2=PPEAsg--; B=677gi6ouf29bn&b=2&f=s",
+     *    Json.Cookie: "Q=q2=PPEAsg--; B=677gi6ouf29bn&b=2&f=s",
      *    "Cache-Control": "no-cache",
      * ...}</pre>
      * It does no further checking or conversion. It does not parse dates.
      * It does not do '%' transforms on URLs.
-     * @param string An HTTP header string.
-     * @return A JSONObject containing the elements and attributes
-     * of the XML string.
+     * @param string An Json.HTTP header string.
+     * @return A Json.JSONObject containing the elements and attributes
+     * of the Json.XML string.
      * @throws JSONException
      */
     public static JSONObject toJSONObject(String string) throws JSONException {
@@ -73,11 +72,11 @@ public class HTTP {
         String         token;
 
         token = x.nextToken();
-        if (token.toUpperCase().startsWith("HTTP")) {
+        if (token.toUpperCase().startsWith("Json.HTTP")) {
 
 // Response
 
-            jo.put("HTTP-Version", token);
+            jo.put("Json.HTTP-Version", token);
             jo.put("Status-Code", x.nextToken());
             jo.put("Reason-Phrase", x.nextTo('\0'));
             x.next();
@@ -88,7 +87,7 @@ public class HTTP {
 
             jo.put("Method", token);
             jo.put("Request-URI", x.nextToken());
-            jo.put("HTTP-Version", x.nextToken());
+            jo.put("Json.HTTP-Version", x.nextToken());
         }
 
 // Fields
@@ -104,22 +103,22 @@ public class HTTP {
 
 
     /**
-     * Convert a JSONObject into an HTTP header. A request header must contain
+     * Convert a Json.JSONObject into an Json.HTTP header. A request header must contain
      * <pre>{
      *    Method: "POST" (for example),
      *    "Request-URI": "/" (for example),
-     *    "HTTP-Version": "HTTP/1.1" (for example)
+     *    "Json.HTTP-Version": "Json.HTTP/1.1" (for example)
      * }</pre>
      * A response header must contain
      * <pre>{
-     *    "HTTP-Version": "HTTP/1.1" (for example),
+     *    "Json.HTTP-Version": "Json.HTTP/1.1" (for example),
      *    "Status-Code": "200" (for example),
      *    "Reason-Phrase": "OK" (for example)
      * }</pre>
-     * Any other members of the JSONObject will be output as HTTP fields.
+     * Any other members of the Json.JSONObject will be output as Json.HTTP fields.
      * The result will end with two CRLF pairs.
-     * @param jo A JSONObject
-     * @return An HTTP header string.
+     * @param jo A Json.JSONObject
+     * @return An Json.HTTP header string.
      * @throws JSONException if the object does not contain enough
      *  information.
      */
@@ -128,7 +127,7 @@ public class HTTP {
         String              string;
         StringBuilder       sb = new StringBuilder();
         if (jo.has("Status-Code") && jo.has("Reason-Phrase")) {
-            sb.append(jo.getString("HTTP-Version"));
+            sb.append(jo.getString("Json.HTTP-Version"));
             sb.append(' ');
             sb.append(jo.getString("Status-Code"));
             sb.append(' ');
@@ -140,14 +139,14 @@ public class HTTP {
             sb.append(jo.getString("Request-URI"));
             sb.append('"');
             sb.append(' ');
-            sb.append(jo.getString("HTTP-Version"));
+            sb.append(jo.getString("Json.HTTP-Version"));
         } else {
-            throw new JSONException("Not enough material for an HTTP header.");
+            throw new JSONException("Not enough material for an Json.HTTP header.");
         }
         sb.append(CRLF);
         while (keys.hasNext()) {
             string = keys.next();
-            if (!"HTTP-Version".equals(string)      && !"Status-Code".equals(string) &&
+            if (!"Json.HTTP-Version".equals(string)      && !"Status-Code".equals(string) &&
                     !"Reason-Phrase".equals(string) && !"Method".equals(string) &&
                     !"Request-URI".equals(string)   && !jo.isNull(string)) {
                 sb.append(string);

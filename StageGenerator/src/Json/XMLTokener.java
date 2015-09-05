@@ -1,4 +1,4 @@
-/*
+package Json;/*
 Copyright (c) 2002 JSON.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,12 +23,11 @@ SOFTWARE.
 */
 
 /**
- * The XMLTokener extends the JSONTokener to provide additional methods
- * for the parsing of XML texts.
+ * The Json.XMLTokener extends the Json.JSONTokener to provide additional methods
+ * for the parsing of Json.XML texts.
  * @author JSON.org
  * @version 2014-05-03
  */
-package Json;
 public class XMLTokener extends JSONTokener {
 
 
@@ -47,7 +46,7 @@ public class XMLTokener extends JSONTokener {
    }
 
     /**
-     * Construct an XMLTokener from a string.
+     * Construct an Json.XMLTokener from a string.
      * @param s A source string.
      */
     public XMLTokener(String s) {
@@ -80,7 +79,7 @@ public class XMLTokener extends JSONTokener {
 
 
     /**
-     * Get the next XML outer token, trimming whitespace. There are two kinds
+     * Get the next Json.XML outer token, trimming whitespace. There are two kinds
      * of tokens: the '<' character which begins a markup tag, and the content
      * text between markup tags.
      *
@@ -121,7 +120,7 @@ public class XMLTokener extends JSONTokener {
      *     <code>&amp;  &apos;  &gt;  &lt;  &quot;</code>.
      * @param ampersand An ampersand character.
      * @return  A Character or an entity String if the entity is not recognized.
-     * @throws JSONException If missing ';' in XML entity.
+     * @throws JSONException If missing ';' in Json.XML entity.
      */
     public Object nextEntity(char ampersand) throws JSONException {
         StringBuilder sb = new StringBuilder();
@@ -132,7 +131,7 @@ public class XMLTokener extends JSONTokener {
             } else if (c == ';') {
                 break;
             } else {
-                throw syntaxError("Missing ';' in XML entity: &" + sb);
+                throw syntaxError("Missing ';' in Json.XML entity: &" + sb);
             }
         }
         String string = sb.toString();
@@ -142,12 +141,12 @@ public class XMLTokener extends JSONTokener {
 
 
     /**
-     * Returns the next XML meta token. This is used for skipping over <!...>
+     * Returns the next Json.XML meta token. This is used for skipping over <!...>
      * and <?...?> structures.
      * @return Syntax characters (<code>< > / = ! ?</code>) are returned as
      *  Character, and strings and names are returned as Boolean. We don't care
      *  what the values actually are.
-     * @throws JSONException If a string is not properly closed or if the XML
+     * @throws JSONException If a string is not properly closed or if the Json.XML
      *  is badly structured.
      */
     public Object nextMeta() throws JSONException {
@@ -208,12 +207,12 @@ public class XMLTokener extends JSONTokener {
 
 
     /**
-     * Get the next XML Token. These tokens are found inside of angle
+     * Get the next Json.XML Token. These tokens are found inside of angle
      * brackets. It may be one of these characters: <code>/ > = ! ?</code> or it
      * may be a string wrapped in single quotes or double quotes, or it may be a
      * name.
      * @return a String or a Character.
-     * @throws JSONException If the XML is not well formed.
+     * @throws JSONException If the Json.XML is not well formed.
      */
     public Object nextToken() throws JSONException {
         char c;

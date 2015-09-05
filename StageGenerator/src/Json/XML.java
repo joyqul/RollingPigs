@@ -1,4 +1,4 @@
-/*
+package Json;/*
 Copyright (c) 2002 JSON.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,12 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package Json;
 import java.util.Iterator;
 
 /**
- * This provides static methods to convert an XML text into a JSONObject,
- * and to covert a JSONObject into an XML text.
+ * This provides static methods to convert an Json.XML text into a Json.JSONObject,
+ * and to covert a Json.JSONObject into an Json.XML text.
  * @author JSON.org
  * @version 2014-05-03
  */
@@ -61,7 +60,7 @@ public class XML {
     public static final Character SLASH = '/';
 
     /**
-     * Replace special characters with XML escapes:
+     * Replace special characters with Json.XML escapes:
      * <pre>
      * &amp; <small>(ampersand)</small> is replaced by &amp;amp;
      * &lt; <small>(less than)</small> is replaced by &amp;lt;
@@ -119,8 +118,8 @@ public class XML {
 
     /**
      * Scan the content following the named tag, attaching it to the context.
-     * @param x       The XMLTokener containing the source string.
-     * @param context The JSONObject that will include the new material.
+     * @param x       The Json.XMLTokener containing the source string.
+     * @param context The Json.JSONObject that will include the new material.
      * @param name    The tag name.
      * @return true if the close tag is processed.
      * @throws JSONException
@@ -292,7 +291,7 @@ public class XML {
     /**
      * Try to convert a string into a number, boolean, or null. If the string
      * can't be converted, return the string. This is much less ambitious than
-     * JSONObject.stringToValue, especially because it does not attempt to
+     * Json.JSONObject.stringToValue, especially because it does not attempt to
      * convert plus forms, octal forms, hex forms, or E forms lacking decimal
      * points.
      * @param string A String.
@@ -334,9 +333,9 @@ public class XML {
 
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML string into a
-     * JSONObject. Some information may be lost in this transformation
-     * because JSON is a data format and XML is a document format. XML uses
+     * Convert a well-formed (but not necessarily valid) Json.XML string into a
+     * Json.JSONObject. Some information may be lost in this transformation
+     * because JSON is a data format and Json.XML is a document format. Json.XML uses
      * elements, attributes, and content text, while JSON uses unordered
      * collections of name/value pairs and arrays of values. JSON does not
      * does not like to distinguish between elements and attributes.
@@ -344,7 +343,7 @@ public class XML {
      * text may be placed in a "content" member. Comments, prologs, DTDs, and
      * <code>&lt;[ [ ]]></code> are ignored.
      * @param string The source string.
-     * @return A JSONObject containing the structured data from the XML string.
+     * @return A Json.JSONObject containing the structured data from the Json.XML string.
      * @throws JSONException
      */
     public static JSONObject toJSONObject(String string) throws JSONException {
@@ -358,8 +357,8 @@ public class XML {
 
 
     /**
-     * Convert a JSONObject into a well-formed, element-normal XML string.
-     * @param object A JSONObject.
+     * Convert a Json.JSONObject into a well-formed, element-normal Json.XML string.
+     * @param object A Json.JSONObject.
      * @return  A string.
      * @throws  JSONException
      */
@@ -369,8 +368,8 @@ public class XML {
 
 
     /**
-     * Convert a JSONObject into a well-formed, element-normal XML string.
-     * @param object A JSONObject.
+     * Convert a Json.JSONObject into a well-formed, element-normal Json.XML string.
+     * @param object A Json.JSONObject.
      * @param tagName The optional name of the enclosing tag.
      * @return A string.
      * @throws JSONException
@@ -464,8 +463,8 @@ public class XML {
             }
             return sb.toString();
 
-// XML does not have good support for arrays. If an array appears in a place
-// where XML is lacking, synthesize an <array> element.
+// Json.XML does not have good support for arrays. If an array appears in a place
+// where Json.XML is lacking, synthesize an <array> element.
 
         } else {
             if (object.getClass().isArray()) {

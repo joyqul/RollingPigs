@@ -1,4 +1,4 @@
-/*
+package Json;/*
 Copyright (c) 2002 JSON.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,16 +23,15 @@ SOFTWARE.
 */
 
 /**
- * The HTTPTokener extends the JSONTokener to provide additional methods
- * for the parsing of HTTP headers.
+ * The Json.HTTPTokener extends the Json.JSONTokener to provide additional methods
+ * for the parsing of Json.HTTP headers.
  * @author JSON.org
  * @version 2014-05-03
  */
-package Json;
 public class HTTPTokener extends JSONTokener {
 
     /**
-     * Construct an HTTPTokener from a string.
+     * Construct an Json.HTTPTokener from a string.
      * @param string A source string.
      */
     public HTTPTokener(String string) {
@@ -41,7 +40,7 @@ public class HTTPTokener extends JSONTokener {
 
 
     /**
-     * Get the next token or string. This is used in parsing HTTP headers.
+     * Get the next token or string. This is used in parsing Json.HTTP headers.
      * @throws JSONException
      * @return A String.
      */
