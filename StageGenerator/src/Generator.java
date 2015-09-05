@@ -176,7 +176,7 @@ public class Generator{
 	static class Node{
 
 		static int counter = 0;
-		final int[] mapping = {0xff0000, 0x00ff00, 0xffff00, 0xff00ff, 0x000000};
+		final int[] mapping = {0xffffff, 0xff0000, 0x00ff00, 0x000000, 0xffff00, 0xfffffff, 0xffffff, 0xffffff, 0xff00ff, 0x000000};
 		final String type = "node";
 		int id, onSId, color, radius;
 
@@ -184,7 +184,7 @@ public class Generator{
 			id = counter++;
 			radius = 50;
 			this.onSId = onSId;
-			for(int i=0;i<5;i++) if(mapping[i] == colorCode) color = (1<<i);
+			for(int i=0;i<5;i++) if(mapping[i] == colorCode) color = i;
 			nodeList.add(this);
 		}
 
