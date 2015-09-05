@@ -11,10 +11,11 @@ public class Generator{
 	static ArrayList<Circle> circleList;
 	static ArrayList<Slot> slotList;
 	static ArrayList<Node> nodeList;
-	static String[] names = {"lv01", "lv02", "lv03", "lv04", "lv05", "lv06", "lv07"};
+	static final int totalStages = 30;
 
 	public static void main(String[] args) throws Exception{
-		for(String name : names){
+		for(int i=1;i<=totalStages;i++){
+			String name = String.format("lv%02d", i);
 			Circle.counter = Slot.counter = Node.counter = 0;
 			PrintWriter out = new PrintWriter(name+"jsom.txt");
 			circleList = new ArrayList<>();
@@ -26,6 +27,7 @@ public class Generator{
 			for(Circle c : circleList) result.put(c.toJSONObject());
 			for(Slot s : slotList) result.put(s.toJSONObject());
 			for(Node n : nodeList) result.put(n.toJSONObject());
+			System.out.println("\nstage "+i+" : ");
 			System.out.println(result.toString());
 			out.println(result.toString());
 			out.flush();
@@ -76,7 +78,7 @@ public class Generator{
 			if(red > 225) red = 0xff;
 			else red = 0;
 			argb += (blue + (green << 8) + (red << 16));
-			if(argb != 0xffffff) System.out.printf("%d %d : %d %d %d %X%n", x, y, red, green, blue, argb);
+			//if(argb != 0xffffff) System.out.printf("%d %d : %d %d %d %X%n", x, y, red, green, blue, argb);
 			switch(argb){
 				case 0x0000ff:
 					for(Circle c : circleList){
