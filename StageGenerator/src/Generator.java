@@ -12,7 +12,12 @@ public class Generator{
 
 	public static void main(String[] args) throws Exception{
 		PrintWriter out = new PrintWriter("TestStage.txt");
-		JSONArray result = testStage();
+	//	JSONArray result = testStage();
+		readImage("tutorial.jpg");
+		JSONArray result = new JSONArray();
+		for(Circle c : circleList) result.put(c.toJSONObject());
+		for(Slot s : slotList) result.put(s.toJSONObject());
+		for(Node n : nodeList) result.put(n.toJSONObject());
 		System.out.println(result.toString());
 		out.println(result.toString());
 		out.flush();
