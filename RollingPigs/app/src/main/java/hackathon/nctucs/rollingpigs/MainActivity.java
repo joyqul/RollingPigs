@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
 
     private final int[] stages = new int[]{ R.raw.stage1 , R.raw.stage1};
-    private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle };
+    private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle , R.drawable.circle };
     private final int[] nodeSrc   = new int[]{ R.drawable.pig_black , R.drawable.pig_blue , R.drawable.pig_green
     , R.drawable.pig_org , R.drawable.pig_pink};
 
