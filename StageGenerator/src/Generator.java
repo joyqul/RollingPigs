@@ -31,7 +31,7 @@ public class Generator{
 		circle2.put("radius", 150);
 		JSONArray temp2 = new JSONArray();
 		temp2.put(1);
-		circle1.put("slots", temp2);
+		circle2.put("slots", temp2);
 		result.put(circle2);
 
 		JSONObject circle3 = new JSONObject();
@@ -44,7 +44,7 @@ public class Generator{
 		circle3.put("radius", 150);
 		JSONArray temp3 = new JSONArray();
 		temp3.put(2);
-		circle1.put("slots", temp3);
+		circle3.put("slots", temp3);
 		result.put(circle3);
 
 		JSONObject slot1 = new JSONObject();
