@@ -74,11 +74,11 @@ public class Node{
 		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(img, View.X, View.Y, path);
 		objectAnimator.setDuration(1000);
 
-		Animation animation = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-		animation.setRepeatCount(0);
-		animation.setDuration(1000);
+		//Animation animation = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		//animation.setRepeatCount(0);
+		//animation.setDuration(1000);
 
-		img.startAnimation(animation);
+		//img.startAnimation(animation);
 		objectAnimator.start();
 	}
 

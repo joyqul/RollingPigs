@@ -30,8 +30,8 @@ import hackathon.nctucs.rollingpigs.elements.Slot;
 public class MainActivity extends Activity {
 
 
-    private final int[] stages = new int[]{ R.raw.lv01json, R.raw.lv01json, R.raw.lv02Json,
-    R.raw.lv03Json, R.raw.lv04Json, R.raw.lv05json, R.raw.lv06Json, R.raw.lv07Json};
+    private final int[] stages = new int[]{ R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
+    R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom};
     private final int[] circleSrc = new int[]{ R.drawable.circle , R.drawable.circle , R.drawable.circle };
     private final int[] nodeSrc   = new int[]{ R.drawable.pig_black , R.drawable.pig_blue , R.drawable.pig_green
     , R.drawable.pig_org , R.drawable.pig_pink};
@@ -153,6 +153,10 @@ public class MainActivity extends Activity {
         Set<Integer> cSet = circles.keySet();
 
         for ( int key : cSet ){
+
+            Log.i( "added key" , key + "" );
+            Log.i( "added key" , key + "" );
+
             Circle circle = circles.get( key );
 
             int radius = (int)circle.getRadius();
@@ -177,7 +181,9 @@ public class MainActivity extends Activity {
             params = new FrameLayout.LayoutParams( radius/2 , radius/2 );
             params.gravity = Gravity.TOP | Gravity.LEFT;
             params.setMargins( circle.getX() -radius/4 , circle.getY()-radius/4 , 0 , 0 );
+
             imageView.setImageResource( circle.getSrc() );
+
             imageView.setLayoutParams( params );
 
             imageView.setTag( key );
@@ -185,7 +191,9 @@ public class MainActivity extends Activity {
                  new ImageView.OnClickListener(){
                      @Override
                      public void onClick(View v) {
+
                            rotateCircle( (int)v.getTag() );
+
                            updateCnt();
                            checkWin();
                      }
