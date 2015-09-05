@@ -15,6 +15,7 @@ public class Generator{
 
 	public static void main(String[] args) throws Exception{
 		for(int i=1;i<=totalStages;i++){
+			
 			String name = String.format("lv%02d", i);
 			Circle.counter = Slot.counter = Node.counter = 0;
 			PrintWriter out = new PrintWriter(name+"jsom.txt");
