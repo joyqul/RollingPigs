@@ -224,14 +224,6 @@ public class MainActivity extends Activity {
         }
     };
 
-			imageView.setLayoutParams(params);
-			imageView.bringToFront();
-			imageView.setTag(key);
-		}
-
-		// draw the nodes
-		Set<Integer> nSet = nodes.keySet();
-        
     @Override
     protected void onResume() {
         super.onStart();
@@ -261,8 +253,11 @@ public class MainActivity extends Activity {
     private void updateCnt(){
         cnt += 1;
         step.setText( "Step : " + cnt );
+
         if ( cnt % 10 == 0 ) {
+
             Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT).show();
+
             for (Node n : nodes.values()) {
                 n.freezeEffect();
             }
@@ -279,13 +274,6 @@ public class MainActivity extends Activity {
         }
     }
 
-			node.img = imageView;
-
-			container.addView(imageView);
-		}
-	}
-
-	private void initStage(int stage) throws IOException, JSONException{
     private void playPig(){
         MediaPlayer mp = MediaPlayer.create( this , R.raw.pig );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -308,11 +296,6 @@ public class MainActivity extends Activity {
         // draw the circles
 
 
-		// requires read file
-		InputStreamReader inputStreamReader = new InputStreamReader(getResources().openRawResource(stages[stage]));
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		String input = bufferedReader.readLine();
         Set<Integer> cSet = circles.keySet();
 
         for ( int key : cSet ){
@@ -323,6 +306,7 @@ public class MainActivity extends Activity {
             Circle circle = circles.get( key );
 
             int radius = (int)circle.getRadius();
+
 
             ImageView imageView = new ImageView( this );
             imageView.setScaleType( ImageView.ScaleType.FIT_XY );
@@ -349,16 +333,7 @@ public class MainActivity extends Activity {
 
             );
 
-					Circle circle = new Circle(
-							stageInfo.getInt("id"),
-							stageInfo.getInt("color"),
-							stageInfo.getInt("x"),
-							stageInfo.getInt("y"),
-							stageInfo.getDouble("radius"),
-							circleSrc[stageInfo.getInt("src")]
-					);
 
-					JSONArray slot = stageInfo.getJSONArray("slots");
             circle.img = imageView;
 
             container.addView( imageView );
@@ -423,6 +398,7 @@ public class MainActivity extends Activity {
 
 
     private void initStage( int stage ) throws IOException, JSONException{
+
 
         Log.e("stage", "stage"+stage);
 
