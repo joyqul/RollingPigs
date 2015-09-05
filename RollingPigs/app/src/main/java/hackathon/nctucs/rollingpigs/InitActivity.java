@@ -19,7 +19,7 @@ public class InitActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView( R.layout.init );
 
-        btn = (ImageView) findViewById( R.id.startGame );
+        btn = (ImageView) findsViewById( R.id.startGame );
         btn.setOnClickListener(
             new View.OnClickListener() {
                 @Override

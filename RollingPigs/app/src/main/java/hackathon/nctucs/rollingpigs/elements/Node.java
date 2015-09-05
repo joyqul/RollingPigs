@@ -86,28 +86,32 @@ public class Node{
 	}
 
 	public void freezeEffect(){
-		ObjectAnimator animator1 = ObjectAnimator.ofFloat(img, "translationX", 0, -5);
+		ObjectAnimator animator1 = ObjectAnimator.ofFloat(img, "translationX",  -25);
 		animator1.setDuration(100);
-		ObjectAnimator animator2 = ObjectAnimator.ofFloat(img, "translationX", 0, 5);
+		ObjectAnimator animator2 = ObjectAnimator.ofFloat(img, "translationX",  5);
 		animator2.setDuration(100);
-		ObjectAnimator animator3 = ObjectAnimator.ofFloat(img, "translationX", 0, -5);
+
+		ObjectAnimator animator3 = ObjectAnimator.ofFloat(img, "translationX",  -5);
 		animator3.setDuration(100);
-		ObjectAnimator animator4 = ObjectAnimator.ofFloat(img, "translationX", 0, 5);
+		ObjectAnimator animator4 = ObjectAnimator.ofFloat(img, "translationX",  5);
 		animator4.setDuration(100);
-		ObjectAnimator animator5 = ObjectAnimator.ofFloat(img, "translationX", 0, -5);
+		ObjectAnimator animator5 = ObjectAnimator.ofFloat(img, "translationX",  -5);
 		animator5.setDuration(100);
-		ObjectAnimator animator6 = ObjectAnimator.ofFloat(img, "translationX", 0, 5);
+		ObjectAnimator animator6 = ObjectAnimator.ofFloat(img, "translationX",  5);
 		animator6.setDuration(100);
 
 		AnimatorSet animatorSet = new AnimatorSet();
 		List<Animator> playList = new ArrayList<>();
 		playList.add(animator1);
 		playList.add(animator2);
+
 		playList.add(animator3);
 		playList.add(animator4);
 		playList.add(animator5);
 		playList.add(animator6);
+
 		animatorSet.playSequentially(playList);
+        animatorSet.setStartDelay( 1000 );
 		animatorSet.start();
 	}
 
