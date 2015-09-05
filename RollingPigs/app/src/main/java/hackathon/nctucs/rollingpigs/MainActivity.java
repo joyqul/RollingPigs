@@ -1,13 +1,18 @@
 package hackathon.nctucs.rollingpigs;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -124,6 +129,40 @@ public class MainActivity extends Activity {
         }
 
         if ( cnt == slots.size() ){
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder( this );
+
+            View view = getLayoutInflater().inflate( R.layout.successdialog , null );
+            ImageView img = (ImageView)view.findViewById( R.id.next_step );
+            img.setOnClickListener(
+                  new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+                          stage += 1;
+                          try {
+                              initStage(stage);
+                          }
+                          catch ( Exception e ){
+                              e.printStackTrace();
+                          }
+                      }
+                  }
+
+
+            );
+
+            builder.setView( view );
+            builder.setOnDismissListener(
+                new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        MainActivity.this.finish();
+                    }
+                }
+            );
+            builder.create().show();
+
             Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
 
         }
@@ -144,7 +183,7 @@ public class MainActivity extends Activity {
 
         FrameLayout container = (FrameLayout)findViewById( R.id.container );
 
-        LayoutInflater inflater = getLayoutInflater();
+        container.removeAllViews();
 
 
         // draw the circles
@@ -155,7 +194,7 @@ public class MainActivity extends Activity {
         for ( int key : cSet ){
 
             Log.i( "added key" , key + "" );
-            Log.i( "added key" , key + "" );
+
 
             Circle circle = circles.get( key );
 
@@ -167,9 +206,25 @@ public class MainActivity extends Activity {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams( radius*2 , radius*2 );
             params.gravity = Gravity.TOP | Gravity.LEFT;
             params.setMargins( circle.getX() - radius , circle.getY() - radius , 0 , 0 );
+            imageView.setClickable(false);
+            imageView.setImageResource(circle.getSrc());
+            imageView.setLayoutParams(params);
+            imageView.setClickable(true);
+            imageView.setTag( key );
+            imageView.setOnClickListener(
+                    new ImageView.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
 
-            imageView.setImageResource( circle.getSrc() );
-            imageView.setLayoutParams( params );
+
+                            rotateCircle( (int)v.getTag() );
+                            updateCnt();
+                            checkWin();
+                        }
+                    }
+
+            );
+
 
             circle.img = imageView;
 
@@ -185,23 +240,11 @@ public class MainActivity extends Activity {
             imageView.setImageResource( circle.getSrc() );
 
             imageView.setLayoutParams( params );
+            imageView.bringToFront();
+            imageView.setTag(key);
 
-            imageView.setTag( key );
-            imageView.setOnClickListener(
-                 new ImageView.OnClickListener(){
-                     @Override
-                     public void onClick(View v) {
 
-                           rotateCircle( (int)v.getTag() );
-
-                           updateCnt();
-                           checkWin();
-                     }
-                 }
-
-            );
-
-            container.addView( imageView );
+            //container.addView( imageView );
 
 
         }
