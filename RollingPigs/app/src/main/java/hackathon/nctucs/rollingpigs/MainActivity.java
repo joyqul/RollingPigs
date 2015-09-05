@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,11 +42,10 @@ public class MainActivity extends Activity {
     SharedPreferences sharedPreferences;
     private final int[] stages = new int[]{ R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
     R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom};
-    private final int[] circleSrc = new int[]{ R.drawable.circle_blue3 , R.drawable.pink_circle3 , R.drawable.circle_green3 , R.drawable.circle_gray3 };
-    private final int[] nodeSrc   = new int[]{ 0 , R.drawable.pig_blue , R.drawable.pig_pink , 0 , R.drawable.pig_green , 0 ,
-            0 , 0 , R.drawable.pig_black
-
-    };
+    private final int[] circleSrc = new int[]{  R.drawable.circle_blue3 , R.drawable.pink_circle3 ,  R.drawable.circle_green
+    , R.drawable.circle_gray3};
+    private final int[] nodeSrc   = new int[]{ R.drawable.pig_blue , R.drawable.pig_blue ,
+    R.drawable.pig_pink , 0 , R.drawable.pig_green , 0 , 0 , 0 , R.drawable.pig_black};
 
     Map< Integer , Circle > circles = new HashMap<>();
     Map< Integer , Node >   nodes = new HashMap<>();
@@ -187,8 +188,25 @@ public class MainActivity extends Activity {
             prev = Math.min( prev , cnt );
 
             ((TextView) view.findViewById(R.id.high_score) ).setText( "High score : " + prev );
+            Thread t = new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                        }
+                        catch ( Exception e ){
+                            e.printStackTrace();
+                        }
+                        Message msg = new Message();
 
-            alg.show();
+                        handler.sendMessage( msg );
+
+                    }
+                }
+            );
+            t.start();
+
 
             Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
 
@@ -196,6 +214,15 @@ public class MainActivity extends Activity {
 
 
     }
+
+    private Handler handler = new Handler(  ){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            alg.show();
+
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -226,10 +253,15 @@ public class MainActivity extends Activity {
     private void updateCnt(){
         cnt += 1;
         step.setText( "Step : " + cnt );
-        Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT).show();
-		for(Node n : nodes.values()){
-			n.freezeEffect();
-		}
+
+        if ( cnt % 10 == 0 ) {
+
+            Toast.makeText(this, "一陣風吹過來，豬豬覺得冷", Toast.LENGTH_SHORT).show();
+
+            for (Node n : nodes.values()) {
+                n.freezeEffect();
+            }
+        }
     }
 
     private void playClick(){
@@ -366,7 +398,6 @@ public class MainActivity extends Activity {
 
 
     private void initStage( int stage ) throws IOException, JSONException{
-
 
         Log.e("stage", "stage"+stage);
 
