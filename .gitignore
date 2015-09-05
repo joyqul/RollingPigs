@@ -33,5 +33,6 @@ nbproject
 # my files
 build/
 .idea/
+RollingPigs/.idea/
 .gradle/
 local.properties

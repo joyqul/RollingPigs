@@ -1,5 +1,7 @@
 package hackathon.nctucs.rollingpigs.elements;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +10,13 @@ import java.util.List;
  */
 public class Circle {
 
-    private String src;
+    private int src;
     private int id, color, x, y;
     private double radius;
-    private List< Slot > slots = new ArrayList<Slot>();
+    private List< Integer > slots = new ArrayList();
+    public ImageView img;
 
-
-    public Circle( int _id, int _color, int _x , int _y , double _radius , String _src ){
+    public Circle( int _id, int _color, int _x , int _y , double _radius , int _src ){
         id = _id;
         color = _color;
         x = _x;
@@ -22,10 +24,21 @@ public class Circle {
         radius = _radius;
         src = _src;
     }
-    public void addSlot( Slot _slot ){
+    public void addSlot( Integer _slot ){
         slots.add( _slot );
     }
-
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+    public int getSrc(){
+        return src;
+    }
+    public double getRadius(){
+        return radius;
+    }
 
 
 }
