@@ -173,6 +173,8 @@ public class MainActivity extends Activity {
                             circleSrc[ stageInfo.getInt( "src" ) ]
                     );
 
+                    
+
                     JSONArray slot = stageInfo.getJSONArray("slots");
 
                     for (int i = 0; i < slot.length(); i++)
