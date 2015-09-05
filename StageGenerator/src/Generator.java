@@ -51,7 +51,7 @@ public class Generator{
 		slot1.put("type", "slot");
 		slot1.put("id", 0);
 		slot1.put("x", 309);
-		slot1.put("y", 564);
+		slot1.put("y", 514);
 		slot1.put("content", 0);
 		result.put(slot1);
 
@@ -59,7 +59,7 @@ public class Generator{
 		slot2.put("type", "slot");
 		slot2.put("id", 1);
 		slot2.put("x", 459);
-		slot2.put("y", 564);
+		slot2.put("y", 514);
 		slot2.put("content", 1);
 		result.put(slot2);
 
