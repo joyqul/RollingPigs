@@ -1,5 +1,6 @@
 package hackathon.nctucs.rollingpigs.elements;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Path;
@@ -13,7 +14,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Shamrock on 2015/9/5.
@@ -77,18 +78,41 @@ public class Node{
 
 		ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(img, "rotation", 0.0f, 360.0f);
 		rotateAnimator.setDuration( 250 );
-        rotateAnimator.setRepeatCount( 4 );
+        rotateAnimator.setRepeatCount(4);
 
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.play(objectAnimator).with(rotateAnimator);
 		animatorSet.start();
+	}
 
-		//rotateAnimator.start();
+	public void freezeEffect(){
+		ObjectAnimator animator1 = ObjectAnimator.ofFloat(img, "translationX",  -25);
+		animator1.setDuration(100);
+		ObjectAnimator animator2 = ObjectAnimator.ofFloat(img, "translationX",  5);
+		animator2.setDuration(100);
 
-		/*Animation animation = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-		animation.setRepeatCount(0);
-		animation.setDuration(1000);
-		img.startAnimation(animation);*/
+		ObjectAnimator animator3 = ObjectAnimator.ofFloat(img, "translationX",  -5);
+		animator3.setDuration(100);
+		ObjectAnimator animator4 = ObjectAnimator.ofFloat(img, "translationX",  5);
+		animator4.setDuration(100);
+		ObjectAnimator animator5 = ObjectAnimator.ofFloat(img, "translationX",  -5);
+		animator5.setDuration(100);
+		ObjectAnimator animator6 = ObjectAnimator.ofFloat(img, "translationX",  5);
+		animator6.setDuration(100);
+
+		AnimatorSet animatorSet = new AnimatorSet();
+		List<Animator> playList = new ArrayList<>();
+		playList.add(animator1);
+		playList.add(animator2);
+
+		playList.add(animator3);
+		playList.add(animator4);
+		playList.add(animator5);
+		playList.add(animator6);
+
+		animatorSet.playSequentially(playList);
+        animatorSet.setStartDelay( 1000 );
+		animatorSet.start();
 	}
 
 	public void setOnSId(int _sid){

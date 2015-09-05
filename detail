@@ -20,7 +20,6 @@
 	Node{
 		type: “node”,
 		id:	$id,
-		src: $img_link
 		onSId: 	$slot_id,
 		color:	$color,  [0101…]
 	}
