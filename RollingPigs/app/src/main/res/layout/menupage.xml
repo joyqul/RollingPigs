@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
+
     >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/menu"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         >
 
         </LinearLayout>
@@ -22,6 +36,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
+
             ></LinearLayout>
 
         <ImageView
@@ -30,7 +46,8 @@
             android:padding="5dp"
             android:id="@+id/stage1"
             android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
+
+            android:src="@drawable/menu_story"
             />
         <ImageView
             android:layout_width="0dp"
@@ -38,7 +55,7 @@
             android:padding="5dp"
             android:id="@+id/stage2"
             android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
+            android:src="@drawable/menu_game_not"
             />
         <ImageView
             android:layout_width="0dp"
@@ -54,6 +71,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage4"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -62,6 +80,73 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:layout_height="match_parent"
+            android:id = "@+id/stage5"
+            android:src="@drawable/pig_black"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage6"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage7"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage8"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage9"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage10"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -92,6 +177,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage11"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -99,6 +185,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage12"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -106,6 +193,72 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage13"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage14"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage15"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage16"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage17"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage18"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -115,6 +268,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage19"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -123,6 +277,72 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage20"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            ></LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage21"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage22"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage23"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage24"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage25"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -153,6 +373,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage26"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -160,6 +381,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage27"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -167,23 +389,26 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage28"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
 
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
 
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="2"
             android:padding="5dp"
+            android:id = "@+id/stage29"
+            android:layout_height="match_parent"
+            android:src="@drawable/pig_black"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:id = "@+id/stage30"
             android:layout_height="match_parent"
             android:src="@drawable/pig_black"
             />
@@ -196,190 +421,15 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             ></LinearLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            ></LinearLayout>
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            ></LinearLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            ></LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            ></LinearLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="5dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/pig_black"
-            />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            ></LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="0"
         android:layout_height="0dp">
 
         <LinearLayout
@@ -413,5 +463,6 @@
 
         </LinearLayout>
 
+    </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

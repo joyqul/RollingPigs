@@ -8,17 +8,18 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:src="@drawable/pig_logo"
+        android:layout_weight="7"
+
+        android:src="@drawable/pig_logo2"
         />
 
     <ImageView
         android:id="@+id/startGame"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="0"
-        android:layout_weight="1"
-        android:layout_marginBottom= "30dp"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        android:layout_weight="2"
         android:src="@drawable/start"
         />
 

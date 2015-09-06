@@ -1,5 +1,8 @@
 package hackathon.nctucs.rollingpigs;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +17,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,7 +33,9 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,25 +46,90 @@ import hackathon.nctucs.rollingpigs.elements.Slot;
 
 public class MainActivity extends Activity {
 
+    // 0, 10, 15
+
     SharedPreferences sharedPreferences;
     private final int[] stages = new int[]{ R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
-    R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom};
+    R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom, R.raw.lv08jsom, R.raw.lv09jsom
+            , R.raw.lv11jsom, R.raw.lv11jsom, R.raw.lv12jsom, R.raw.lv13jsom, R.raw.lv14jsom, R.raw.lv16jsom
+            , R.raw.lv16jsom, R.raw.lv17jsom, R.raw.lv18jsom, R.raw.lv19jsom, R.raw.lv20jsom, R.raw.lv21jsom
+            , R.raw.lv22jsom, R.raw.lv23jsom, R.raw.lv24jsom, R.raw.lv25jsom, R.raw.lv26jsom, R.raw.lv27jsom
+            , R.raw.lv28jsom, R.raw.lv29jsom};
     private final int[] circleSrc = new int[]{  R.drawable.circle_blue3 , R.drawable.pink_circle3 ,  R.drawable.circle_green
     , R.drawable.circle_gray3};
     private final int[] nodeSrc   = new int[]{ R.drawable.pig_blue , R.drawable.pig_blue ,
-    R.drawable.pig_pink , 0 , R.drawable.pig_green , 0 , 0 , 0 , R.drawable.pig_black};
+    R.drawable.pig_pink , R.drawable.pig_pink_blue , R.drawable.pig_green , 0 , 0 , 0 , R.drawable.pig_black};
 
     Map< Integer , Circle > circles = new HashMap<>();
     Map< Integer , Node >   nodes = new HashMap<>();
     Map< Integer , Slot >   slots = new HashMap<>();
     MediaPlayer mediaPlayer;
-    ImageView reset ;
+    ImageView reset , new_lev;
     TextView step;
     AlertDialog alg;
     int cnt = 0 , stage = -1;
     boolean flag = false;
 
     private void reloadStage(){
+        Toast.makeText( getApplicationContext() , "stage" + stage , Toast.LENGTH_SHORT ).show();
+
+        if ( !sharedPreferences.getBoolean( "str"+stage , false ) ) {
+            sharedPreferences.edit().putBoolean("str" + stage, true).apply();
+
+            ImageView img = (ImageView)findViewById( R.id.new_level );
+            new_lev = img;
+            img.setVisibility( View.VISIBLE );
+
+
+            ObjectAnimator animator1 = ObjectAnimator.ofFloat(img, "translationX",  -25);
+            animator1.setDuration(100);
+            ObjectAnimator animator2 = ObjectAnimator.ofFloat(img, "translationX",  5);
+            animator2.setDuration(100);
+            ObjectAnimator animator3 = ObjectAnimator.ofFloat(img, "translationX",  -5);
+            animator3.setDuration(100);
+            ObjectAnimator animator4 = ObjectAnimator.ofFloat(img, "translationX",  5);
+            animator4.setDuration(100);
+            ObjectAnimator animator5 = ObjectAnimator.ofFloat(img, "translationX",  -5);
+            animator5.setDuration(100);
+            ObjectAnimator animator6 = ObjectAnimator.ofFloat(img, "translationX",  5);
+            animator6.setDuration(100);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            List<Animator> playList = new ArrayList<>();
+
+            playList.add(animator1);
+            playList.add(animator2);
+            playList.add(animator3);
+            playList.add(animator4);
+            playList.add(animator5);
+            playList.add(animator6);
+            animatorSet.setStartDelay( 500 );
+            animatorSet.playSequentially(playList);
+            animatorSet.start();
+
+
+
+            Thread t = new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(3000);
+                                Message msg = new Message();
+                                msg.what = 2;
+                                handler.sendMessage( msg );
+                            }catch ( Exception e ){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+            );
+            t.start();
+
+        }
+
+
         cnt = 0; flag = false;
         step.setText( "Step : "+cnt );
         try {
@@ -70,6 +142,7 @@ public class MainActivity extends Activity {
         }
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +272,7 @@ public class MainActivity extends Activity {
                             e.printStackTrace();
                         }
                         Message msg = new Message();
-
+                        msg.what = 1;
                         handler.sendMessage( msg );
 
                     }
@@ -209,7 +282,7 @@ public class MainActivity extends Activity {
 
 
             Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
-
+            sharedPreferences.edit().putInt( "stage" , stage+1 ).apply();
         }
 
 
@@ -218,8 +291,14 @@ public class MainActivity extends Activity {
     private Handler handler = new Handler(  ){
         @Override
         public void handleMessage(Message msg) {
+
+
             super.handleMessage(msg);
-            alg.show();
+
+            if ( msg.what == 1 )
+                alg.show();
+            else if ( msg.what == 2 )
+                new_lev.setVisibility( View.INVISIBLE );
 
         }
     };

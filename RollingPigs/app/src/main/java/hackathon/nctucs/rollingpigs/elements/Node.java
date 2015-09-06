@@ -83,6 +83,9 @@ public class Node{
 		AnimatorSet animatorSet = new AnimatorSet();
 		animatorSet.play(objectAnimator).with(rotateAnimator);
 		animatorSet.start();
+
+
+
 	}
 
 	public void freezeEffect(){
