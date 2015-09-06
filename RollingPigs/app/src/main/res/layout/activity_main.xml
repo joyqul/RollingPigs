@@ -9,14 +9,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
+
         android:src="@drawable/bg"
         ></ImageView>
+
+
+    <hackathon.nctucs.rollingpigs.TypeWriter
+        android:id="@+id/top"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textSize="25dp"
+        android:text=""
+        android:visibility="invisible"
+        />
+
+    <hackathon.nctucs.rollingpigs.TypeWriter
+        android:id="@+id/bottom"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="bottom"
+        android:gravity="right"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textSize="25dp"
+        android:text=""
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id = "@+id/container"
+        android:id = "@+id/containers"
         >
+
+
+
 
     </FrameLayout>
 
@@ -30,6 +62,7 @@
         />
 
     <FrameLayout
+        android:id="@+id/footer"
         android:background="#0c304e"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"

@@ -81,7 +81,7 @@ public class MenuPage extends Activity {
     private void reloadPage(){
 
         int lastStage = sharedPreferences.getInt( "stage" , 1 );
-        lastStage = 30;
+
         for ( int i = 1 ; i <= 30  ; i++ ){
             ImageView img = (ImageView)findViewById( getResourceId( "stage"+i , "id" , getPackageName() ) );
 
@@ -136,6 +136,11 @@ public class MenuPage extends Activity {
         if ( sharedPreferences.getBoolean( "mute" , false ) == true )
             return;
 
+        if ( mediaPlayer!= null  ) {
+            mediaPlayer.start();
+            return;
+        }
+
         mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.setLooping( true );
@@ -153,7 +158,7 @@ public class MenuPage extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if ( mediaPlayer.isPlaying() )
+        if ( mediaPlayer!= null && mediaPlayer.isPlaying() )
             mediaPlayer.stop();
 
     }

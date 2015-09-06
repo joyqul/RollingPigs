@@ -102,7 +102,7 @@ public class Circle {
                 m_slots.get( target_sid ).getY()
             );
 
-            
+
 
             FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)nodes.get(i).img.getLayoutParams();
             lp.setMargins( (int)(m_slots.get( target_sid ).getX() - nodes.get( i ).getRadius() )

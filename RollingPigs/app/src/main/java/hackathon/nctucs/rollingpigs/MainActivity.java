@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
@@ -47,9 +49,10 @@ import hackathon.nctucs.rollingpigs.elements.Slot;
 public class MainActivity extends Activity {
 
     // 0, 10, 15
-
+    FrameLayout container;
     SharedPreferences sharedPreferences;
-    private final int[] stages = new int[]{ R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
+    private final int[] stories = new int[36];
+    private final int[] stages = new int[]{ 0 , R.raw.lv01jsom, R.raw.lv01jsom, R.raw.lv02jsom,
     R.raw.lv03jsom, R.raw.lv04jsom, R.raw.lv05jsom, R.raw.lv06jsom, R.raw.lv07jsom, R.raw.lv08jsom, R.raw.lv09jsom
             , R.raw.lv11jsom, R.raw.lv11jsom, R.raw.lv12jsom, R.raw.lv13jsom, R.raw.lv14jsom, R.raw.lv16jsom
             , R.raw.lv16jsom, R.raw.lv17jsom, R.raw.lv18jsom, R.raw.lv19jsom, R.raw.lv20jsom, R.raw.lv21jsom
@@ -59,21 +62,42 @@ public class MainActivity extends Activity {
     , R.drawable.circle_gray3};
     private final int[] nodeSrc   = new int[]{ R.drawable.pig_blue , R.drawable.pig_blue ,
     R.drawable.pig_pink , R.drawable.pig_pink_blue , R.drawable.pig_green , 0 , 0 , 0 , R.drawable.pig_black};
-
+    FrameLayout footer;
     Map< Integer , Circle > circles = new HashMap<>();
     Map< Integer , Node >   nodes = new HashMap<>();
     Map< Integer , Slot >   slots = new HashMap<>();
     MediaPlayer mediaPlayer;
     ImageView reset , new_lev;
     TextView step;
+    TypeWriter top , bottom;
     AlertDialog alg;
     int cnt = 0 , stage = -1;
     boolean flag = false;
 
     private void reloadStage(){
-        Toast.makeText( getApplicationContext() , "stage" + stage , Toast.LENGTH_SHORT ).show();
+        //Toast.makeText( getApplicationContext() , "stage" + stage , Toast.LENGTH_SHORT ).show();
 
-        if ( !sharedPreferences.getBoolean( "str"+stage , false ) ) {
+        if ( !(stage == 1 || stage == 11 || stage == 16) ){
+            step.setVisibility( View.VISIBLE );
+            footer.setVisibility( View.VISIBLE );
+            top.setVisibility( View.INVISIBLE );
+            bottom.setVisibility( View.INVISIBLE );
+        }
+        else{
+            step.setVisibility( View.INVISIBLE );
+            footer.setVisibility( View.INVISIBLE );
+            top.setVisibility( View.VISIBLE );
+            bottom.setVisibility( View.VISIBLE );
+            top.bringToFront();
+            bottom.bringToFront();
+            top.setTextColor(Color.rgb( 0x66 , 0x66 , 0x66 ) );
+            bottom.setTextColor(Color.rgb(0x66, 0x66, 0x66));
+        }
+
+        circles.clear();
+        nodes.clear();
+        slots.clear();
+        if ( !sharedPreferences.getBoolean( "str"+stage , false ) && !( stage ==1 || stage == 11 || stage==16 ) ) {
             sharedPreferences.edit().putBoolean("str" + stage, true).apply();
 
             ImageView img = (ImageView)findViewById( R.id.new_level );
@@ -148,13 +172,18 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText( getApplicationContext() , "started" , Toast.LENGTH_LONG ).show();
+        //Toast.makeText( getApplicationContext() , "started" , Toast.LENGTH_LONG ).show();
         sharedPreferences = getSharedPreferences( "db" , MODE_PRIVATE );
-
-
+        stories[1] = R.drawable.story0;
+        stories[11] = R.drawable.story1;
+        stories[16] = R.drawable.story2;
+        container = (FrameLayout)findViewById( R.id.containers );
         stage = getIntent().getIntExtra( "stage" , -1 );
+        footer = (FrameLayout) findViewById( R.id.footer );
 
         step = (TextView)findViewById( R.id.score );
+        top = (TypeWriter) findViewById( R.id.top );
+        bottom = ( TypeWriter ) findViewById( R.id.bottom );
 
         reset = (ImageView)findViewById( R.id.reset );
         reset.setOnClickListener(
@@ -236,6 +265,7 @@ public class MainActivity extends Activity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            playClick();
                             stage += 1;
                             try {
                                 reloadStage();
@@ -281,7 +311,7 @@ public class MainActivity extends Activity {
             t.start();
 
 
-            Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
+            //Toast.makeText( getApplicationContext() , "Win" , Toast.LENGTH_LONG ).show();
             sharedPreferences.edit().putInt( "stage" , stage+1 ).apply();
         }
 
@@ -306,6 +336,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onStart();
+
+        if ( mediaPlayer != null ) {
+            mediaPlayer.start();
+            return;
+        }
+
         mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.setLooping(true);
@@ -321,10 +357,10 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
-        super.onPause();
+        super.onStop();
 
-        if ( mediaPlayer.isPlaying() )
-            mediaPlayer.stop();
+        if ( mediaPlayer != null && mediaPlayer.isPlaying() )
+            mediaPlayer.pause();
 
     }
 
@@ -346,6 +382,16 @@ public class MainActivity extends Activity {
     private void playClick(){
         MediaPlayer mp = MediaPlayer.create( this , R.raw.click );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mp.setOnCompletionListener(
+                new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.stop();
+                        mp.release();
+                    }
+                }
+
+        );
         try {
             mp.start();
         }
@@ -355,21 +401,105 @@ public class MainActivity extends Activity {
 
     private void playPig(){
         MediaPlayer mp = MediaPlayer.create( this , R.raw.pig );
+        mp.setOnCompletionListener(
+                new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.stop();
+                        mp.release();
+                    }
+                }
+
+        );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mp.start();
+
         }
         catch ( Exception e ){
         }
     }
 
+    public int getResourceId(String pVariableName, String pResourcename, String pPackageName)
+    {
+        try {
+            return getResources().getIdentifier(pVariableName, pResourcename, pPackageName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
     private void drawElements(){
 
 
-        FrameLayout container = (FrameLayout)findViewById( R.id.container );
+
+
+
+
 
         container.removeAllViews();
+
+        if ( stage == 1 || stage == 11 || stage == 16 ){
+
+            ImageView img = new ImageView(this);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT );
+            img.setLayoutParams( lp );
+            img.setScaleType(ImageView.ScaleType.FIT_XY );
+            img.setImageResource( stories[stage] );
+
+            int[] arr = new int[2];
+            arr[0] = stage ; arr[1] = 1;
+            img.setTag( arr );
+
+            img.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                playClick();
+                              int[] arr = (int[])v.getTag();
+                                Log.e( "arr" , arr[0] + " " + arr[1] );
+
+                              int st = arr[0];
+                              int cnt = arr[1];
+                              int id = getResourceId( "_"+st+"_"+cnt , "string" , getPackageName() );
+                              if ( id == -1 ) {
+                                    MainActivity.this.finish();
+                                  sharedPreferences.edit().putInt( "stage" , stage+1 ).apply();
+                              }
+                                else {
+                                  String val = "error";
+
+                                  try {
+
+                                      val = getString(id);
+                                  }
+                                  catch ( Exception e ){
+                                      MainActivity.this.finish();
+                                      sharedPreferences.edit().putInt( "stage" , stage+1 ).apply();
+                                  }
+                                  Log.e( val , val );
+                                    if ( cnt % 2 == 1 ){
+                                        top.animateText( val );
+
+                                    }
+                                     else{
+                                        bottom.animateText( val );
+                                    }
+                                    arr[1] += 1;
+                                    v.setTag( arr );
+
+                                }
+                        }
+                    }
+
+
+            );
+
+            container.addView( img );
+
+            return;
+        }
 
 
         // draw the circles
@@ -385,6 +515,7 @@ public class MainActivity extends Activity {
             Circle circle = circles.get( key );
 
             int radius = (int)circle.getRadius();
+
 
 
             ImageView imageView = new ImageView( this );
@@ -418,17 +549,7 @@ public class MainActivity extends Activity {
             container.addView( imageView );
 
             // this is the button to click
-            imageView = new ImageView( this );
-            imageView.setScaleType( ImageView.ScaleType.FIT_XY );
-            params = new FrameLayout.LayoutParams( radius/2 , radius/2 );
-            params.gravity = Gravity.TOP | Gravity.LEFT;
-            params.setMargins( circle.getX() -radius/4 , circle.getY()-radius/4 , 0 , 0 );
 
-            imageView.setImageResource( circle.getSrc() );
-
-            imageView.setLayoutParams( params );
-            imageView.bringToFront();
-            imageView.setTag(key);
 
 
             //container.addView( imageView );

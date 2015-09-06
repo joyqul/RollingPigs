@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="7"
 
-        android:src="@drawable/pig_logo2"
+        android:src="@drawable/pig_logo_ver3"
         />
 
     <ImageView
