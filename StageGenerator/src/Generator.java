@@ -14,6 +14,7 @@ public class Generator{
 	static final int totalStages = 30;
 
 	public static void main(String[] args) throws Exception{
+		PrintWriter bestMove = new PrintWriter("bestmove.txt");
 		for(int i=1;i<totalStages;i++){
 			if(i == 10  || i == 15) continue;
 			String name = String.format("lv%02d", i);
@@ -30,10 +31,13 @@ public class Generator{
 			for(Node n : nodeList) result.put(n.toJSONObject());
 			System.out.println("\nstage "+i+" : ");
 			System.out.println(result.toString());
+			bestMove.println(i+" "+new Calculator(circleList, slotList, nodeList).calculate()+" moves");
 			out.println(result.toString());
 			out.flush();
 			out.close();
 		}
+		bestMove.flush();
+		bestMove.close();
 	}
 
 	static void readFile(String fileName) throws Exception{
@@ -47,9 +51,10 @@ public class Generator{
 			for(Slot s : slotList){
 				double dist = Math.sqrt((c.x-s.x)*(c.x-s.x) + (c.y-s.y)*(c.y-s.y));
 				if(Math.abs(dist - radius) < 50){
-					c.slots.put(s.id);
+					c.slots.add(s);
 				}
 			}
+			Collections.sort(c.slots);
 		}
 	}
 
@@ -85,7 +90,7 @@ public class Generator{
 							break;
 						}
 					}
-					if(!tooClose) new Circle(x, y);
+					if(!tooClose) circleList.add(new Circle(x, y));
 					break;
 				case 0xff0000:
 				case 0x00ff00:
@@ -98,7 +103,7 @@ public class Generator{
 							break;
 						}
 					}
-					if(!tooClose) new Slot(x, y, argb);
+					if(!tooClose) slotList.add(new Slot(x, y, argb, nodeList));
 					break;
 			}
 			col++;
@@ -109,97 +114,102 @@ public class Generator{
 		}
 	}
 
-	static class Circle{
+}
 
-		static int counter = 0;
-		final String type = "circle";
-		int id, src, color, x, y, radius;
-		JSONArray slots;
+class Circle{
 
-		Circle(){
-			id = counter;
-			slots = new JSONArray();
-			counter++;
-			circleList.add(this);
-		}
+	static int counter = 0;
+	final String type = "circle";
+	int id, src, color, x, y, radius;
+	ArrayList<Slot> slots;
 
-		Circle(int x, int y){
-			this();
-			this.x = x;
-			this.y = y;
-		}
-
-		JSONObject toJSONObject(){
-			JSONObject obj = new JSONObject();
-			obj.put("type", type);
-			obj.put("id", id);
-			obj.put("src", src);
-			obj.put("color", color);
-			obj.put("x", x);
-			obj.put("y", y);
-			obj.put("radius", radius);
-			obj.put("slots", slots);
-			return obj;
-		}
-
+	Circle(){
+		id = counter;
+		slots = new ArrayList<>();
+		counter++;
 	}
 
-	static class Slot{
-
-		static int counter = 0;
-		final String type = "slot";
-		int id, x, y, content;
-
-		Slot(){
-			id = counter++;
-			slotList.add(this);
-		}
-
-		Slot(int x, int y, int color){
-			this();
-			this.x = x;
-			this.y = y;
-			Node newNode = new Node(id, color);
-			content = newNode.id;
-		}
-
-		JSONObject toJSONObject(){
-			JSONObject obj = new JSONObject();
-			obj.put("type", type);
-			obj.put("id", id);
-			obj.put("x", x);
-			obj.put("y", y);
-			obj.put("content", content);
-			return obj;
-		}
+	Circle(int x, int y){
+		this();
+		this.x = x;
+		this.y = y;
 	}
 
-	static class Node{
-
-		static int counter = 0;
-		final int[] mapping = {0xffffff, 0xff0000, 0x00ff00, 0x000000, 0xffff00, 0xfffffff, 0xffffff, 0xffffff, 0xff00ff};
-		final String type = "node";
-		int id, onSId, color, radius;
-
-		Node(int onSId, int colorCode){
-			id = counter++;
-			radius = 50;
-			this.onSId = onSId;
-			for(int i=0;i<9;i++) if(mapping[i] == colorCode) color = i;
-			nodeList.add(this);
-		}
-
-		JSONObject toJSONObject(){
-			JSONObject obj = new JSONObject();
-			obj.put("type", type);
-			obj.put("id", id);
-			obj.put("onSId", onSId);
-			obj.put("color", color);
-			obj.put("radius", radius);
-			return obj;
-		}
+	JSONObject toJSONObject(){
+		JSONObject obj = new JSONObject();
+		obj.put("type", type);
+		obj.put("id", id);
+		obj.put("src", src);
+		obj.put("color", color);
+		obj.put("x", x);
+		obj.put("y", y);
+		obj.put("radius", radius);
+		JSONArray temp = new JSONArray();
+		for(Slot s : slots) temp.put(s.id);
+		obj.put("slots", temp);
+		return obj;
 	}
 
+}
+
+class Slot implements Comparable<Slot>{
+
+	static int counter = 0;
+	final String type = "slot";
+	int id, x, y, content;
+
+	Slot(){
+		id = counter++;
+	}
+
+	Slot(int x, int y, int color, ArrayList<Node> nodeList){
+		this();
+		this.x = x;
+		this.y = y;
+		Node newNode = new Node(id, color);
+		content = newNode.id;
+		nodeList.add(newNode);
+	}
+
+	@Override
+	public int compareTo(Slot rhs){
+		return Double.compare(Math.atan2(y, x), Math.atan2(rhs.y, rhs.x));
+	}
+
+	JSONObject toJSONObject(){
+		JSONObject obj = new JSONObject();
+		obj.put("type", type);
+		obj.put("id", id);
+		obj.put("x", x);
+		obj.put("y", y);
+		obj.put("content", content);
+		return obj;
+	}
+}
+
+class Node{
+
+	static int counter = 0;
+	final int[] mapping = {0xffffff, 0xff0000, 0x00ff00, 0x000000, 0xffff00, 0xfffffff, 0xffffff, 0xffffff, 0xff00ff};
+	final String type = "node";
+	int id, onSId, color, radius;
+
+	Node(int onSId, int colorCode){
+		id = counter++;
+		radius = 50;
+		this.onSId = onSId;
+		for(int i=0;i<9;i++) if(mapping[i] == colorCode) color = i;
+	}
+
+	JSONObject toJSONObject(){
+		JSONObject obj = new JSONObject();
+		obj.put("type", type);
+		obj.put("id", id);
+		obj.put("onSId", onSId);
+		obj.put("color", color);
+		obj.put("radius", radius);
+		return obj;
+	}
 }
 
 class Scan{
