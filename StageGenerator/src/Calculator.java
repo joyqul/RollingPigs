@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class Calculator{
@@ -5,32 +6,50 @@ public class Calculator{
 	ArrayList<Circle> circleList;
 	ArrayList<Slot> slotList;
 	ArrayList<Node> nodeList;
+	PrintWriter out;
 
-	public Calculator(ArrayList<Circle> circleList, ArrayList<Slot> slotList, ArrayList<Node> nodeList){
+	public Calculator(ArrayList<Circle> circleList, ArrayList<Slot> slotList, ArrayList<Node> nodeList, String name) throws Exception{
 		this.circleList = circleList;
 		this.slotList = slotList;
 		this.nodeList = nodeList;
 		Collections.sort(nodeList, new NodeCmp());
+		out = new PrintWriter(name+"sol.txt");
 	}
 
 	int calculate(){
-		Set<State> set = new HashSet<>();
+		Map<State, State> map = new HashMap<>();
+		Map<State, Integer> op = new HashMap<>();
 		Queue<State> queue = new ArrayDeque<>();
 		State original = new State();
 		queue.add(original);
-		set.add(original);
+		map.put(original, null);
 		while(!queue.isEmpty()){
 			State now = queue.poll();
-			if(now.checkWin()) return now.step;
+			if(now.checkWin()){
+				trace(now, map, op);
+				out.flush();
+				out.close();
+				return now.step;
+			}
 			for(int i=0;i<circleList.size();i++){
 				State next = now.rotate(i);
-				if(set.add(next)) queue.add(next);
+				if(!map.containsKey(next)){
+					map.put(next, now);
+					queue.add(next);
+					op.put(next, i);
+				}
 			}
 		}
 		return -1;
 	}
 
-	class State{
+	void trace(State now, Map<State, State> map, Map<State, Integer> op){
+		if(now == null) return;
+		trace(map.get(now), map, op);
+		if(op.get(now) != null) out.println(op.get(now));
+	}
+
+	class State implements Comparable<State>{
 
 		char[] assignment;
 		String string;
@@ -39,7 +58,7 @@ public class Calculator{
 		State(){
 			assignment = new char[slotList.size()];
 			int counter = 0;
-			for(Slot s : slotList) assignment[counter++] = ((char)nodeList.get(s.content).color);
+			for(Slot s : slotList) assignment[counter++] = ((char)(nodeList.get(s.content).color+'0'));
 			string = new String(assignment);
 			step = 0;
 		}
@@ -68,7 +87,7 @@ public class Calculator{
 			Arrays.fill(legal, false);
 			for(Circle c : circleList){
 				for(Slot s : c.slots){
-					int color = assignment[s.id];
+					int color = assignment[s.id]-'0';
 					legal[s.id] = legal[s.id] || ((color&c.color) != 0);
 				}
 			}
@@ -82,8 +101,13 @@ public class Calculator{
 		}
 
 		@Override
+		public int compareTo(State rhs){
+			return string.compareTo(rhs.string);
+		}
+
+		@Override
 		public boolean equals(Object obj){
-			if(obj==null) return false;
+			if(obj == null) return false;
 			State rhs = (State)obj;
 			return string.equals(rhs.string);
 		}

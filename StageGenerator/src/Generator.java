@@ -31,7 +31,7 @@ public class Generator{
 			for(Node n : nodeList) result.put(n.toJSONObject());
 			System.out.println("\nstage "+i+" : ");
 			System.out.println(result.toString());
-			bestMove.println(i+" "+new Calculator(circleList, slotList, nodeList).calculate()+" moves");
+			bestMove.println(i+" "+new Calculator(circleList, slotList, nodeList, name).calculate()+" moves");
 			out.println(result.toString());
 			out.flush();
 			out.close();
