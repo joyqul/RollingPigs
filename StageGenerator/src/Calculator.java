@@ -25,6 +25,7 @@ public class Calculator{
 		map.put(original, null);
 		while(!queue.isEmpty()){
 			State now = queue.poll();
+			//System.out.println("now = "+now+", step:"+now.step);
 			if(now.checkWin()){
 				trace(now, map, op);
 				out.flush();
@@ -57,8 +58,7 @@ public class Calculator{
 
 		State(){
 			assignment = new char[slotList.size()];
-			int counter = 0;
-			for(Slot s : slotList) assignment[counter++] = ((char)(nodeList.get(s.content).color+'0'));
+			for(Slot s : slotList) assignment[s.id] = ((char)(nodeList.get(s.content).color+'0'));
 			string = new String(assignment);
 			step = 0;
 		}

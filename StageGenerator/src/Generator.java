@@ -54,7 +54,7 @@ public class Generator{
 					c.slots.add(s);
 				}
 			}
-			Collections.sort(c.slots);
+			Collections.sort(c.slots, c);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Generator{
 
 }
 
-class Circle{
+class Circle implements Comparator<Slot>{
 
 	static int counter = 0;
 	final String type = "circle";
@@ -133,6 +133,13 @@ class Circle{
 		this();
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public int compare(Slot a, Slot b){
+		double ay = a.y - y, ax = a.x - x;
+		double by = b.y - y, bx = b.x - x;
+		return Double.compare(Math.atan2(ay, ax), Math.atan2(by, bx));
 	}
 
 	JSONObject toJSONObject(){
@@ -152,7 +159,7 @@ class Circle{
 
 }
 
-class Slot implements Comparable<Slot>{
+class Slot{
 
 	static int counter = 0;
 	final String type = "slot";
@@ -169,11 +176,6 @@ class Slot implements Comparable<Slot>{
 		Node newNode = new Node(id, color);
 		content = newNode.id;
 		nodeList.add(newNode);
-	}
-
-	@Override
-	public int compareTo(Slot rhs){
-		return Double.compare(Math.atan2(y, x), Math.atan2(rhs.y, rhs.x));
 	}
 
 	JSONObject toJSONObject(){
